@@ -14,30 +14,11 @@
 
   <body>
 
-  	<div class="container mood">
-  		<h2>Quelle est ton humeur du jour ?</h2>
+  	<div class="container">
       
-      <div id="unknownError" class="alert alert-danger">Une erreur est survenue</div>
+  		<h2>C'est fait</h2>
+      <p>Merci !</p>
 
-  		<div class="pictures row">
-	  		{{#pictures}}
-	  			<div class="col col-lg-3 col-sm-6 image">
-		  			<a class="choose-image" data-picture="{{id}}"><img src="{{url}}"/></a>
-		  		</div>
-	  		{{/pictures}}
-	  	</div>
-  	</div>
-
-    <div class="container comment">
-      <h2>As-tu quelque chose à me dire ?</h2>
-
-      <form id="commentForm" method="post" action="{{serverUrl}}/mymood">
-        <div class="form-group">
-         <textarea class="form-control" id="commentTextarea" name="comment" rows="3"></textarea>
-         <input type="hidden" name="picture" id="photoInput"/>
-        </div>
-        <button type="submit" class="btn btn-primary">Envoyer</button>
-      </form>
     </div>
 
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
