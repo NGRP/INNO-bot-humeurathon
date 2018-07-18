@@ -22,17 +22,24 @@
             <div class="col-2" id="navigation" >
                 <ul class="nav flex-column" style="margin-top: 7vh;">
                     <li class="nav-item">
-                        <a class="nav-link nav-active" href="#"><i class="fa fa-info-circle"></i> Activités</a>
+                        <a class="nav-link {{#menu.activites}}nav-active{{/menu.activites}}" href="#activites"><i class="fa fa-info-circle"></i> Activités</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"> <i class="fa fa-exclamation-circle"></i> Alertes</a>
+                        <a class="nav-link {{#menu.alertes}}nav-active{{/menu.alertes}}" href="#alertes"> <i class="fa fa-exclamation-circle"></i> Alertes</a>
                     </li>
                 </ul>
 
             </div>
             <div class="col" id="content">
-                <div class="row" id="menu">Sub menu ?</div>
-                <div class="row" id="data"></div>
+                <div class="row" id="menu">
+                    <div class="input-group" style="margin: 0">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="search"><i class="fa fa-search"></i></span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Rechercher...">
+                    </div>
+                </div>
+                <div class="row" id="data">{{content}}</div>
             </div>
         </div>
     </div>
@@ -46,7 +53,11 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script>
-    
+        let BASEURL = "https://v2.poc.viseo.io/humeurathon/";
+        $(".nav-link").click(function() {
+            let link = $(this).attr('href').substring(1);
+            window.location.replace(BASEURL + link);
+        })
     </script>
 
   </body>
@@ -94,7 +105,7 @@
     }
 
     #menu {
-        background-color:grey; 
+        background-color:	#C8C8C8; 
         width: 100%;
         height: 60px;
     }
@@ -122,7 +133,7 @@
     }
 
     .nav-active {
-        color: #B1BBC5;
+        color: #C8C8C8;
     }
 
 
