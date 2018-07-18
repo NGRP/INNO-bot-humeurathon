@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+       <!-- Bootstrap CSS -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+     <link href="./styles.css" rel="stylesheet">
+     
+   </head>
+
+  <body>
+
+        <form style= "" id="start">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <img src="https://v1zo.viseo.io/static/viseo_botmaker.png" id="home" width="200"><hr>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-2">
+                        <button type="button" class="btn btn-info btn-main-menu" id="stats" {{#stats}}disabled{{/stats}}>{{display.menu_stat}}</button>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-info btn-main-menu" id="intents" {{#inte}}disabled{{/inte}}>{{display.menu_intents}}</button>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-info btn-main-menu" id="logs" {{#logs}}disabled{{/logs}}>{{display.menu_conv}}</button>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-info btn-main-menu" id="buildings" {{#buildings}}disabled{{/buildings}}>{{display.menu_buil}}</button>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-info btn-main-menu" id="admins" {{#admin}}disabled{{/admin}}>{{display.menu_admi}}</button>
+                    </div>
+                    <div class="col-2" style="width: 100%">
+                        <div class="input-group-btn" style="text-align:left">
+                            <button type="button" id="selectlang" class="btn btn-light dropdown-toggle btn-main-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{display.menu_lang}}
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-left">
+                                <a class="dropdown-item" id="lan-fr" ><img src="https://v1zo.viseo.io/static/fr.svg" width="19"><span style="margin-left: 10px;">Français</span></a>
+                                <a class="dropdown-item" id="lan-en" ><img src="https://v1zo.viseo.io/static/gb.svg" width="19"><span style="margin-left: 10px;">English</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <hr>
+                    </div>
+                </div>
+                <div id="content">
+                    {{{content}}}
+                </div>
+            </div>
+    	</form>
+
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+
+  </body>
+</html>
