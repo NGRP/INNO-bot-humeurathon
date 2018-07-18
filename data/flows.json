@@ -16,7 +16,14 @@
     {
         "id": "895a135a.82608",
         "type": "tab",
-        "label": "TESTS",
+        "label": "Routes",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "1bbdcb59.0d8c55",
+        "type": "tab",
+        "label": "Spreadsheet",
         "disabled": false,
         "info": ""
     },
@@ -102,76 +109,6 @@
         "way": "json",
         "check_dialogflow": "",
         "check_speech": ""
-    },
-    {
-        "id": "158c5852.f8e3b8",
-        "type": "google-spreadsheet",
-        "z": "895a135a.82608",
-        "name": "",
-        "auth": "1b98bf04.b1d071",
-        "sheet": "1tJFncmR66AS55qmLiSWH1OvpGTirCiNDvO1_vQ4LDe4",
-        "range": "pictures",
-        "method": "append",
-        "direction": "column",
-        "action": "get",
-        "clear": false,
-        "line": true,
-        "column": false,
-        "fields": "all",
-        "save": "_sheet",
-        "selfields": [
-            ""
-        ],
-        "cell_l": "",
-        "cell_c": "",
-        "input": "",
-        "output": "",
-        "saveType": "global",
-        "inputType": "msg",
-        "outputType": "msg",
-        "sheetType": "str",
-        "rangeType": "str",
-        "cell_lType": "str",
-        "cell_cType": "str",
-        "x": 360,
-        "y": 720,
-        "wires": [
-            [
-                "ddbde88f.908c18"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "9934c8b5.f39c48",
-        "type": "inject",
-        "z": "895a135a.82608",
-        "name": "",
-        "topic": "",
-        "payload": "Get pictures",
-        "payloadType": "str",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "x": 150,
-        "y": 720,
-        "wires": [
-            [
-                "158c5852.f8e3b8"
-            ]
-        ]
-    },
-    {
-        "id": "ddbde88f.908c18",
-        "type": "debug",
-        "z": "895a135a.82608",
-        "name": "",
-        "active": true,
-        "console": "false",
-        "complete": "false",
-        "x": 570,
-        "y": 720,
-        "wires": []
     },
     {
         "id": "995a5ab9.429158",
@@ -329,40 +266,6 @@
         "wires": []
     },
     {
-        "id": "abf95e52.0a0ae",
-        "type": "inject",
-        "z": "895a135a.82608",
-        "name": "Ok",
-        "topic": "",
-        "payload": "J'ai trouvé une poaquerette dans la cours de récréation",
-        "payloadType": "str",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "x": 170,
-        "y": 640,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "b749e37e.2847d",
-        "type": "inject",
-        "z": "895a135a.82608",
-        "name": "Violence",
-        "topic": "",
-        "payload": "Ya leo ki c fait tapé par joris a la récré",
-        "payloadType": "str",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "x": 160,
-        "y": 680,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "626bf870.4d11b8",
         "type": "subflow:6baaf188.a25a6",
         "z": "895a135a.82608",
@@ -393,7 +296,7 @@
         "type": "function",
         "z": "895a135a.82608",
         "name": "Update",
-        "func": "let comment = msg.comment\n\ncomment.text_score = msg.score\ncomment.tags.concat(msg.results.intents)\n\nreturn msg;",
+        "func": "let mood = msg.mood\n\nmood.text_score = msg.results.score\nmood.tags.concat(msg.results.intents)\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 620,
@@ -410,19 +313,19 @@
         "z": "895a135a.82608",
         "name": "",
         "server-type": "mongodb",
-        "collection": "comments",
+        "collection": "moods",
         "collectionType": "str",
         "key": "",
         "offset": "",
         "offsetType": "num",
         "limit": "",
         "limitType": "num",
-        "value": "comment",
+        "value": "mood",
         "operation": "add",
         "merge": false,
         "server-mongodb": "90831821.61a9d8",
         "server-nedb": "",
-        "x": 800,
+        "x": 790,
         "y": 160,
         "wires": [
             []
@@ -434,7 +337,7 @@
         "z": "895a135a.82608",
         "name": "",
         "server-type": "mongodb",
-        "collection": "comments",
+        "collection": "moods",
         "collectionType": "str",
         "key": "{}",
         "offset": "",
@@ -446,8 +349,8 @@
         "merge": false,
         "server-mongodb": "90831821.61a9d8",
         "server-nedb": "",
-        "x": 340,
-        "y": 200,
+        "x": 330,
+        "y": 220,
         "wires": [
             [
                 "28e66f0b.ebb4c"
@@ -459,11 +362,11 @@
         "type": "http in",
         "z": "895a135a.82608",
         "name": "",
-        "url": "/comment",
-        "method": "get",
-        "upload": true,
+        "url": "/mood",
+        "method": "post",
+        "upload": false,
         "swaggerDoc": "",
-        "x": 140,
+        "x": 130,
         "y": 100,
         "wires": [
             [
@@ -477,7 +380,7 @@
         "type": "function",
         "z": "895a135a.82608",
         "name": "Build",
-        "func": "const moment = global.get('tzModule');\nlet now = moment().tz('Europe/Paris')\n\nlet comment = {\n    \"date\": now.toISOString(),\n    \"user\": \"12345\", \n    \"role\": \"witness\",\n    \"text\": \"\", \n    \"text_score\": 0,\n    \"attachment\" : \"\", \n    \"attachment_type\": \"\", \n    \"attachment_score\": 0,\n    \"tags\": []\n}\n\n// Comment userID is REQUIRED\nif (!msg.payload.user){ return msg; }\n\ncomment.text = msg.payload.text;\ncomment.user = msg.payload.user;\ncomment.type = msg.payload.type; // FIXME: relies to the UI\ncomment.role = \"witness\"; // FIXME: compute from database of users\n\n// FIXME: Handle attachments\n\n\nmsg.comment = comment;\nmsg.payload = comment.text\nreturn msg;",
+        "func": "const moment = global.get('tzModule');\nlet now = moment().tz('Europe/Paris')\n\nlet mood = {\n    \"date\": now.toISOString(),\n    \"user\": \"12345\", \n    \"text\": \"\", \n    \"text_score\": 0,\n    \"tags\": []\n}\n\n// Comment UserID is REQUIRED\nif (!msg.payload.user){ return msg; }\n\nmood.text = msg.payload.text;\nmood.user = msg.payload.user;\n\n// FIXME: Handle attachments\nmsg.mood    = mood;\nmsg.payload = mood.text\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 310,
@@ -755,7 +658,7 @@
         "id": "eade6041.28d47",
         "type": "inject",
         "z": "895a135a.82608",
-        "name": "List All Comments",
+        "name": "List All Moods",
         "topic": "",
         "payload": "",
         "payloadType": "date",
@@ -763,7 +666,7 @@
         "crontab": "",
         "once": false,
         "x": 130,
-        "y": 200,
+        "y": 220,
         "wires": [
             [
                 "fcd8aecc.ef51"
@@ -778,8 +681,8 @@
         "active": true,
         "console": "false",
         "complete": "false",
-        "x": 530,
-        "y": 200,
+        "x": 510,
+        "y": 220,
         "wires": []
     },
     {
@@ -800,7 +703,269 @@
         ]
     },
     {
-        "id": "97c6a192.a6c18",
+        "id": "8bf4c5ec.f8ae38",
+        "type": "http response",
+        "z": "895a135a.82608",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 450,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "4d05e4dc.80860c",
+        "type": "function",
+        "z": "895a135a.82608",
+        "name": "Build",
+        "func": "const moment = global.get('tzModule');\nlet now = moment().tz('Europe/Paris')\n\nlet alert = {\n    \"date\": now.toISOString(),\n    \"user\": \"12345\", \n    \"type\": \"harcelement\",\n    \"role\": \"witness\",\n    \"text\": \"\", \n    \"text_score\": 0,\n    \"attachment\" : \"\", \n    \"attachment_type\": \"\", \n    \"attachment_score\": 0,\n    \"tags\": []\n}\n\n// Comment userID is REQUIRED\nif (!msg.payload.user){ return msg; }\n\nalert.text = msg.payload.text;\nalert.user = msg.payload.user;\nalert.type = msg.payload.type; // FIXME: relies to the UI\nalert.role = \"witness\";        // FIXME: relies to the UI\n\n// FIXME: Handle attachments\n\n\nmsg.alert   = alert;\nmsg.payload = alert.text\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 330,
+        "y": 520,
+        "wires": [
+            [
+                "47575baa.144464",
+                "82033db2.c8d87"
+            ]
+        ]
+    },
+    {
+        "id": "b9d63410.1f94e8",
+        "type": "http in",
+        "z": "895a135a.82608",
+        "name": "",
+        "url": "/alert",
+        "method": "post",
+        "upload": true,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 520,
+        "wires": [
+            [
+                "4d05e4dc.80860c",
+                "77d367af.fbd378"
+            ]
+        ]
+    },
+    {
+        "id": "77d367af.fbd378",
+        "type": "debug",
+        "z": "895a135a.82608",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 350,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "47575baa.144464",
+        "type": "http response",
+        "z": "895a135a.82608",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 470,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "82033db2.c8d87",
+        "type": "subflow:6baaf188.a25a6",
+        "z": "895a135a.82608",
+        "name": "",
+        "x": 480,
+        "y": 560,
+        "wires": [
+            [
+                "32eb95a7.6491fa",
+                "87277541.bb95e8"
+            ]
+        ]
+    },
+    {
+        "id": "87277541.bb95e8",
+        "type": "function",
+        "z": "895a135a.82608",
+        "name": "Update",
+        "func": "let alert = msg.alerts\n\nalert.text_score = msg.results.score\nalert.tags.concat(msg.results.intents)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 640,
+        "y": 580,
+        "wires": [
+            [
+                "dd873095.9e245"
+            ]
+        ]
+    },
+    {
+        "id": "32eb95a7.6491fa",
+        "type": "debug",
+        "z": "895a135a.82608",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "results",
+        "x": 650,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "dd873095.9e245",
+        "type": "nosql",
+        "z": "895a135a.82608",
+        "name": "",
+        "server-type": "mongodb",
+        "collection": "alerts",
+        "collectionType": "str",
+        "key": "",
+        "offset": "",
+        "offsetType": "num",
+        "limit": "",
+        "limitType": "num",
+        "value": "alert",
+        "operation": "add",
+        "merge": false,
+        "server-mongodb": "90831821.61a9d8",
+        "server-nedb": "",
+        "x": 800,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "41645e82.6c064",
+        "type": "nosql",
+        "z": "895a135a.82608",
+        "name": "",
+        "server-type": "mongodb",
+        "collection": "alerts",
+        "collectionType": "str",
+        "key": "{}",
+        "offset": "",
+        "offsetType": "num",
+        "limit": "",
+        "limitType": "num",
+        "value": "",
+        "operation": "find",
+        "merge": false,
+        "server-mongodb": "90831821.61a9d8",
+        "server-nedb": "",
+        "x": 350,
+        "y": 660,
+        "wires": [
+            [
+                "e70104ec.4e9d98"
+            ]
+        ]
+    },
+    {
+        "id": "9c0914eb.a25aa8",
+        "type": "inject",
+        "z": "895a135a.82608",
+        "name": "List All Alerts",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 150,
+        "y": 660,
+        "wires": [
+            [
+                "41645e82.6c064"
+            ]
+        ]
+    },
+    {
+        "id": "e70104ec.4e9d98",
+        "type": "debug",
+        "z": "895a135a.82608",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 530,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "ce40495f.4a9c18",
+        "type": "google-spreadsheet",
+        "z": "1bbdcb59.0d8c55",
+        "name": "",
+        "auth": "1b98bf04.b1d071",
+        "sheet": "1tJFncmR66AS55qmLiSWH1OvpGTirCiNDvO1_vQ4LDe4",
+        "range": "pictures",
+        "method": "append",
+        "direction": "column",
+        "action": "get",
+        "clear": false,
+        "line": true,
+        "column": false,
+        "fields": "all",
+        "save": "_sheet",
+        "selfields": [
+            ""
+        ],
+        "cell_l": "",
+        "cell_c": "",
+        "input": "",
+        "output": "",
+        "saveType": "global",
+        "inputType": "msg",
+        "outputType": "msg",
+        "sheetType": "str",
+        "rangeType": "str",
+        "cell_lType": "str",
+        "cell_cType": "str",
+        "x": 340,
+        "y": 80,
+        "wires": [
+            [
+                "392376b3.a05d3a"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "ade0b2c2.174e4",
+        "type": "inject",
+        "z": "1bbdcb59.0d8c55",
+        "name": "",
+        "topic": "",
+        "payload": "Get pictures",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 130,
+        "y": 80,
+        "wires": [
+            [
+                "ce40495f.4a9c18"
+            ]
+        ]
+    },
+    {
+        "id": "392376b3.a05d3a",
+        "type": "debug",
+        "z": "1bbdcb59.0d8c55",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 550,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "1fe90487.80d5cb",
         "type": "http in",
         "z": "988517b8.810bd8",
         "name": "",
@@ -808,32 +973,32 @@
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 150,
-        "y": 320,
+        "x": 130,
+        "y": 520,
         "wires": [
             [
-                "539e90f7.003af"
+                "b62a7c18.47d52"
             ]
         ]
     },
     {
-        "id": "dc9b85eb.1cbee8",
+        "id": "b6896332.867ca",
         "type": "function",
         "z": "988517b8.810bd8",
         "name": "mustache",
         "func": "let mustache = global.get('mustacheModule');\n\nmsg.payload = mustache.render(msg.payload, {\n    \"serverUrl\": global.get('CONFIG').server.host,\n    \"pictures\" : msg.selectedPictures\n})\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 660,
-        "y": 320,
+        "x": 640,
+        "y": 520,
         "wires": [
             [
-                "28fa1976.dbb0d6"
+                "7f0e2fd9.aa064"
             ]
         ]
     },
     {
-        "id": "539e90f7.003af",
+        "id": "b62a7c18.47d52",
         "type": "file in",
         "z": "988517b8.810bd8",
         "name": "",
@@ -841,61 +1006,109 @@
         "format": "utf8",
         "chunk": false,
         "sendError": false,
-        "x": 400,
-        "y": 320,
+        "x": 380,
+        "y": 520,
         "wires": [
             [
-                "dc9b85eb.1cbee8"
+                "b6896332.867ca"
             ]
         ]
     },
     {
-        "id": "28fa1976.dbb0d6",
+        "id": "7f0e2fd9.aa064",
         "type": "http response",
         "z": "988517b8.810bd8",
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 870,
-        "y": 320,
+        "x": 850,
+        "y": 520,
         "wires": []
     },
     {
-        "id": "89334e32.20adb",
+        "id": "967c3d9e.4d187",
         "type": "http response",
         "z": "988517b8.810bd8",
         "name": "",
-        "statusCode": "302",
+        "statusCode": "",
         "headers": {},
-        "x": 720,
-        "y": 460,
+        "x": 1230,
+        "y": 660,
         "wires": []
     },
     {
-        "id": "4ea3b0df.bf30c",
+        "id": "94bea754.e100a8",
         "type": "function",
         "z": "988517b8.810bd8",
-        "name": "",
-        "func": "msg.headers = {\n    location: global.get('CONFIG').server.host + '/confirm'\n}\nreturn msg;",
+        "name": "redirect",
+        "func": "msg.payload = {\n    redirect: global.get('CONFIG').server.host + '/confirm'\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 570,
-        "y": 460,
+        "x": 1000,
+        "y": 660,
         "wires": [
             [
-                "89334e32.20adb"
+                "967c3d9e.4d187"
             ]
         ]
     },
     {
-        "id": "8bf4c5ec.f8ae38",
-        "type": "http response",
-        "z": "895a135a.82608",
+        "id": "f155b458.245e18",
+        "type": "http in",
+        "z": "988517b8.810bd8",
         "name": "",
-        "statusCode": "",
-        "headers": {},
-        "x": 497,
-        "y": 94,
-        "wires": []
+        "url": "/mymood",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 140,
+        "y": 660,
+        "wires": [
+            [
+                "cb7d719b.a05fe"
+            ]
+        ]
+    },
+    {
+        "id": "ec1a1f1a.a18d1",
+        "type": "nosql",
+        "z": "988517b8.810bd8",
+        "name": "",
+        "server-type": "mongodb",
+        "collection": "mood",
+        "collectionType": "str",
+        "key": "",
+        "offset": "",
+        "offsetType": "num",
+        "limit": "",
+        "limitType": "num",
+        "value": "payload",
+        "operation": "add",
+        "merge": false,
+        "server-mongodb": "90831821.61a9d8",
+        "server-nedb": "",
+        "x": 650,
+        "y": 660,
+        "wires": [
+            [
+                "94bea754.e100a8"
+            ]
+        ]
+    },
+    {
+        "id": "cb7d719b.a05fe",
+        "type": "function",
+        "z": "988517b8.810bd8",
+        "name": "prepare mood",
+        "func": "const moment = global.get('tzModule');\nlet now = moment().tz('Europe/Paris');\n\nmsg.payload = {\n    date: now.toISOString(),\n    user: '123',\n    \"text\": msg.req.body.comment,\n    \"text_score\": 0,\n    \"picture\": msg.req.body.picture,\n    \"tags\": []\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 384,
+        "y": 661,
+        "wires": [
+            [
+                "ec1a1f1a.a18d1"
+            ]
+        ]
     }
 ]

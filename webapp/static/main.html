@@ -33,15 +33,22 @@
             <div class="col" id="content">
                 <div class="row" id="menu">
                     <div class="input-group" >
+                        <div class="input-group-prepend">
+                            <button class="btn btn-light" type="button" style="border-radius: 0;">Semai</button>
+                            <button class="btn btn-light" type="button" style="border-radius: 0;">Mois</button>
+                            <button class="btn btn-light" type="button" style="border-radius: 0;">Trime</button>
+                            <button class="btn btn-light" type="button" style="border-radius: 0;">Semes</button>
+                            <button class="btn btn-light" type="button" style="border-radius: 0;">Année</button>
+                        </div>
                         <input type="text" class="form-control" placeholder="Rechercher..." style="border-radius: 0; background-color: #e9ecef">
                         <div class="input-group-append" style="width:6%;">
-                            <button class="btn btn-secondary" id="search" type="button" style="width:100%; border-radius: 0;">
+                            <button class="btn btn-light" id="search" type="button" style="width:100%; border-radius: 0;">
                                 <i class="fa fa-search" id="search_icon"></i>
                             </button>
                         </div>
                     </div>
                 </div>
-                <div class="row" id="data" style="padding:30 40px;">{{{content}}}</div>
+                <div class="row" id="data" style="padding:30px;">{{{content}}}</div>
             </div>
         </div>
     </div>
@@ -66,10 +73,17 @@
 
   <style>
 
-      .card {
-          background-color: #212529 ;
-          margin:2px;
-      }
+    .btn-light {
+        border: 1px solid #ced4da;
+    }
+
+    .card {
+        text-align: center;
+        padding:15px; 
+        background-color: #e9ecef;
+        border: 1px solid #ced4da;
+        margin-bottom: 30px;
+    }
 
     html,body,.container {
         height:100vh;
