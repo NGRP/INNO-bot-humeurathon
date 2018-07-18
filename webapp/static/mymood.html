@@ -8,7 +8,7 @@
        <!-- Bootstrap CSS -->
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-     <link href="/static/css/mymood.css" rel="stylesheet">
+     <link href="{{serverUrl}}/static/css/mymood.css" rel="stylesheet">
      
    </head>
 
@@ -29,7 +29,7 @@
     <div class="container comment">
       <h2>As-tu quelque chose à me dire ?</h2>
 
-      <form id="commentForm" method="post" action="/comment">
+      <form id="commentForm" method="post" action="{{serverUrl}}/comment">
         <div class="form-group">
          <textarea class="form-control" id="commentTextarea" name="comment" rows="3"></textarea>
          <input type="hidden" name="photo" id="photoInput"/>
@@ -47,7 +47,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 
-    <script type="text/javascript" src="/static/js/mymood.js"></script>
+    <script type="text/javascript" src="{{serverUrl}}/static/js/mymood.js"></script>
 
   </body>
 </html>

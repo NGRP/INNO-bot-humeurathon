@@ -32,14 +32,16 @@
             </div>
             <div class="col" id="content">
                 <div class="row" id="menu">
-                    <div class="input-group" style="margin: 0">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="search"><i class="fa fa-search"></i></span>
+                    <div class="input-group" >
+                        <input type="text" class="form-control" placeholder="Rechercher..." style="border-radius: 0; background-color: #e9ecef">
+                        <div class="input-group-append" style="width:6%;">
+                            <button class="btn btn-secondary" id="search" type="button" style="width:100%; border-radius: 0;">
+                                <i class="fa fa-search" id="search_icon"></i>
+                            </button>
                         </div>
-                        <input type="text" class="form-control" placeholder="Rechercher...">
                     </div>
                 </div>
-                <div class="row" id="data">{{content}}</div>
+                <div class="row" id="data" style="padding:30 40px;">{{{content}}}</div>
             </div>
         </div>
     </div>
@@ -63,6 +65,11 @@
   </body>
 
   <style>
+
+      .card {
+          background-color: #212529 ;
+          margin:2px;
+      }
 
     html,body,.container {
         height:100vh;
@@ -88,6 +95,11 @@
         margin-top: 2vh;
     }
 
+    #search_icon {
+        width:100%; 
+        font-size: 30px;
+        color: #212529;
+    }
     #main_head {
         height: 5vh;
         padding-top: 1vh;
@@ -105,7 +117,7 @@
     }
 
     #menu {
-        background-color:	#C8C8C8; 
+        background-color:	#e9ecef; 
         width: 100%;
         height: 60px;
     }
@@ -133,7 +145,7 @@
     }
 
     .nav-active {
-        color: #C8C8C8;
+        color: #e9ecef;
     }
 
 
