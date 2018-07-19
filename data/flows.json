@@ -865,7 +865,7 @@
         "type": "function",
         "z": "988517b8.810bd8",
         "name": "prepare mood",
-        "func": "const moment = global.get('tzModule');\nlet now = moment().tz('Europe/Paris');\n\nmsg.payload = {\n    \"text\": msg.req.body.comment,\n    \"attachment\": msg.req.body.picture,\n    \"type\": \"mood\",\n    \"user\": \"123\"\n};\n\n\nreturn msg;",
+        "func": "\nmsg.payload = {\n    \"text\": msg.req.body.comment,\n    \"attachment\": msg.req.body.picture,\n    \"type\": \"mood\",\n    \"user\": \"123\"\n};\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 512.9285697937012,
@@ -1711,7 +1711,7 @@
         "type": "function",
         "z": "5a8d8e81.c9b3a",
         "name": "Data",
-        "func": "for (let al of msg.alerts) {\n    al.user = findUser(al.user);\n    al.date = new Date(al.date).toLocaleDateString('fr-FR');\n    if (al.state === 0) {\n        al.status = \"Nouvelle\";\n        al.color = \"danger\"\n    }\n    else if (al.state === 1) {\n        al.status = \"En attente\";\n        al.color = \"warning\"\n    }\n    else if (al.state === 2) {\n        al.status = \"En traitement\";\n        al.color = \"info\"\n    }\n    else if (al.state === 3) {\n        al.status = \"Traitée\";\n        al.color = \"success\"\n    }\n}\nlet mustache = global.get('mustacheModule');\nmsg.content.menu = {alertes : true}\nmsg.content.content = mustache.render(msg.payload, {\n    alerts: msg.alerts\n})\n\nreturn msg; \n\nfunction findUser(id) {\n    for (let user of msg.users) {\n        if (user.id === id) return user;\n    }\n}",
+        "func": "for (let al of msg.alerts) {\n    al.user = findUser(al.user);\n    al.date = new Date(al.date).toLocaleDateString('fr-FR');\n    if (al.state === 0) {\n        al.status = \"Nouvelle\";\n        al.color = \"danger\"\n    }\n    else if (al.state === 1) {\n        al.status = \"En attente\";\n        al.color = \"warning\"\n    }\n    else if (al.state === 2) {\n        al.status = \"En traitement\";\n        al.color = \"info\"\n    }\n    else if (al.state === 3) {\n        al.status = \"Traitée\";\n        al.color = \"success\"\n    }\n}\nlet mustache = global.get('mustacheModule');\nmsg.content.menu = {alertes : true}\nmsg.content.content = mustache.render(msg.payload, {\n    alerts: msg.alerts\n})\n\nreturn msg; \n\nfunction findUser(id) {\n    for (let user of msg.users) {\n        if (user.id === id) {\n            user.nom = user.nom.toUpperCase();\n            return user;\n        }\n    }\n}",
         "outputs": 1,
         "noerr": 0,
         "x": 510,
@@ -2477,14 +2477,14 @@
         "type": "function",
         "z": "988517b8.810bd8",
         "name": "prepareFeedback",
-        "func": "\nreturn msg;",
+        "func": "\nmsg.payload = {\n    \"text\": msg.req.body.comment,\n    //\"attachment\": msg.req.body.picture,\n    \"type\": \"mood\",\n    \"user\": \"123\",\n    \"date\": msg.req.body.date,\n    \n};\n/*\n\n\"date\": now.toISOString(),\n    \"user\": \"12345\", \n    \"type\": \"\",\n    \"role\": \"\",\n    \"mood\": 0,\n    \"text\": \"\", \n    \"text_score\": 0,\n    \"state\": 0,\n    \"state_text\": \"\",\n    \"attachment\" : \"\", \n    \"attachment_type\": \"\", \n    \"attachment_score\": 0,\n    \"tags\": [],\n    \"involve\": []\n    \n    */\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 523.7142944335938,
         "y": 888.5714721679688,
         "wires": [
             [
-                "aa1a7ee3.c1f43"
+                "ad32ac6c.38acf"
             ]
         ]
     },
@@ -2522,8 +2522,24 @@
         "name": "",
         "statusCode": "400",
         "headers": {},
-        "x": 974.2142944335938,
-        "y": 900.5714721679688,
+        "x": 970.2142944335938,
+        "y": 928.5714721679688,
         "wires": []
+    },
+    {
+        "id": "ad32ac6c.38acf",
+        "type": "subflow:3f945d0c.c8fc42",
+        "z": "988517b8.810bd8",
+        "name": "",
+        "x": 762,
+        "y": 888,
+        "wires": [
+            [
+                "aa1a7ee3.c1f43"
+            ],
+            [
+                "7825815d.a7d02"
+            ]
+        ]
     }
 ]

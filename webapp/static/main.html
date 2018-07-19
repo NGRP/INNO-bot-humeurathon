@@ -51,7 +51,7 @@
             window.location.replace(BASEURL + link);
         })
 
-        $("#menu .btn-light").click(function() {
+        $(".btn-timeline ").click(function() {
             //$("#menu .btn").removeClass("btn-active");
             //$(this).addClass("btn-active");
             let tab = (window.location.href.match(/activites/)) ? 'activites' : 'alertes'
@@ -68,6 +68,10 @@
         $(".open_user").click(function() {
             let id = $(this).attr('id');
             window.location.replace(BASEURL + 'alertes?userid=' + id);
+        });
+
+        $(".btn-back-alert").click(function() {
+            window.location.replace(BASEURL + 'alertes');
         });
 
 
