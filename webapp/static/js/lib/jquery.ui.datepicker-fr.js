@@ -19,7 +19,7 @@ jQuery(function($){
 		isRTL: false,
 		showMonthAfterYear: false,
 		yearSuffix: '',
-		minDate: 0,
-		maxDate: '+12M +0D',
+		minDate: '-12M +0D',
+		maxDate: 0
 		};
 });
