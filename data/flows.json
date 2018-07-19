@@ -75,22 +75,31 @@
         "out": []
     },
     {
-        "id": "c7191305.b25f8",
+        "id": "64b74493.10b1bc",
         "type": "subflow",
-        "name": "Check Alerts",
+        "name": "HTML Pupils",
         "info": "",
         "in": [
             {
-                "x": 50,
-                "y": 30,
-                "wires": []
+                "x": 60,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "d83c8231.07415"
+                    }
+                ]
             }
         ],
         "out": [
             {
-                "x": 920,
-                "y": 40,
-                "wires": []
+                "x": 680,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "52d6d507.257b6c",
+                        "port": 0
+                    }
+                ]
             }
         ]
     },
@@ -178,7 +187,7 @@
         "y": 120,
         "wires": [
             [
-                "83198be3.848fe8"
+                "69e34f9b.99e45"
             ]
         ]
     },
@@ -262,7 +271,7 @@
         "type": "function",
         "z": "6baaf188.a25a6",
         "name": "Intent",
-        "func": "let intent = msg.payload.queryResult.intent.displayName\nif (intent){\n    msg.results.intents.push(intent)\n}\nreturn msg;",
+        "func": "let intent = msg.payload.queryResult.intent.displayName\nif (intent){ msg.results.intents.push(intent) }\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 1010,
@@ -290,37 +299,24 @@
         "type": "subflow:6baaf188.a25a6",
         "z": "895a135a.82608",
         "name": "",
-        "x": 440,
-        "y": 220,
+        "x": 460,
+        "y": 340,
         "wires": [
             [
-                "6b5cc98c.5580b8",
                 "40595cf.da240a4"
             ]
         ]
-    },
-    {
-        "id": "6b5cc98c.5580b8",
-        "type": "debug",
-        "z": "895a135a.82608",
-        "name": "",
-        "active": true,
-        "console": "false",
-        "complete": "results",
-        "x": 610,
-        "y": 200,
-        "wires": []
     },
     {
         "id": "40595cf.da240a4",
         "type": "function",
         "z": "895a135a.82608",
         "name": "Update",
-        "func": "let mood = msg.mood\n\nmood.text_score = msg.results.score\nmood.tags.concat(msg.results.intents)\n\nreturn msg;",
+        "func": "let feedback = msg.feedback\n\nfeedback.text_score = msg.results.score\nfeedback.tags.concat(msg.results.intents)\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 600,
-        "y": 240,
+        "x": 620,
+        "y": 340,
         "wires": [
             [
                 "32576f8a.22ac7"
@@ -333,20 +329,20 @@
         "z": "895a135a.82608",
         "name": "",
         "server-type": "mongodb",
-        "collection": "moods",
+        "collection": "feedback",
         "collectionType": "str",
         "key": "",
         "offset": "",
         "offsetType": "num",
         "limit": "",
         "limitType": "num",
-        "value": "mood",
+        "value": "feedback",
         "operation": "add",
         "merge": false,
         "server-mongodb": "90831821.61a9d8",
         "server-nedb": "",
-        "x": 770,
-        "y": 240,
+        "x": 800,
+        "y": 340,
         "wires": [
             [
                 "8bf4c5ec.f8ae38",
@@ -360,7 +356,7 @@
         "z": "895a135a.82608",
         "name": "",
         "server-type": "mongodb",
-        "collection": "moods",
+        "collection": "feedback",
         "collectionType": "str",
         "key": "{}",
         "offset": "",
@@ -372,8 +368,8 @@
         "merge": false,
         "server-mongodb": "90831821.61a9d8",
         "server-nedb": "",
-        "x": 310,
-        "y": 60,
+        "x": 340,
+        "y": 140,
         "wires": [
             [
                 "28e66f0b.ebb4c"
@@ -389,28 +385,12 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 110,
-        "y": 180,
+        "x": 130,
+        "y": 260,
         "wires": [
             [
-                "7f98c098.eeac5",
-                "6f976feb.ef7f9"
-            ]
-        ]
-    },
-    {
-        "id": "7f98c098.eeac5",
-        "type": "function",
-        "z": "895a135a.82608",
-        "name": "Build",
-        "func": "const moment = global.get('tzModule');\nlet now = moment().tz('Europe/Paris')\n\nlet mood = {\n    \"date\": now.toISOString(),\n    \"user\": \"12345\", \n    \"text\": \"\", \n    \"text_score\": 0,\n    \"tags\": []\n}\n\n// Comment UserID is REQUIRED\nif (!msg.payload.user){ return msg; }\n\nmood.text = msg.payload.text;\nmood.user = msg.payload.user;\n\n// FIXME: Handle attachments\nmsg.mood    = mood;\nmsg.payload = mood.text\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 290,
-        "y": 180,
-        "wires": [
-            [
-                "626bf870.4d11b8"
+                "6f976feb.ef7f9",
+                "35a0bab4.7831d6"
             ]
         ]
     },
@@ -422,8 +402,8 @@
         "active": true,
         "console": "false",
         "complete": "false",
-        "x": 310,
-        "y": 140,
+        "x": 330,
+        "y": 220,
         "wires": []
     },
     {
@@ -480,10 +460,11 @@
         "upload": false,
         "swaggerDoc": "",
         "x": 170,
-        "y": 240,
+        "y": 200,
         "wires": [
             [
-                "cf3e7606.11ac08"
+                "d9bab7f4.5260c8",
+                "308bc6bd.9b320a"
             ]
         ]
     },
@@ -492,14 +473,14 @@
         "type": "function",
         "z": "5a8d8e81.c9b3a",
         "name": "Content",
-        "func": "msg.content = {\n    menu : {\n        activites : true,\n        alertes : false\n    }\n};\n\nmsg.test = {\n    users_nb: 241,\n    users_pc: 87,\n    votes_nb: 741,\n    votes_pr: 3.07,\n    votes_te: \"postive\", \n    votes_ev: 1.47,\n    humeurs_pc: 47,\n    humeurs_re: \"\",\n    humeurs_te: \"négative\",\n    humeurs_ev: -2.7\n}\n\nreturn msg;",
+        "func": "let timeline = msg.params.timeline || \"semaine\";\n\nmsg.content = {\n    menu : {\n        activites : true,\n        alertes : false\n    }\n};\n\nlet humeurs = {\n    \"colère\": '<path fill=\"#989A9C\" d=\"M36.169,54.209c-4.813,0-4.813-7.463,0-7.463S40.982,54.209,36.169,54.209z M63.847,46.746  c-4.813,0-4.813,7.463,0,7.463C68.66,54.209,68.66,46.746,63.847,46.746z M94.004,50c-0.489,23.571-19.669,44.504-43.999,43.999  C26.433,93.51,5.5,74.33,6.005,50C6.495,26.429,25.674,5.496,50.004,6.001C74.336,6.506,93.499,25.669,94.004,50z M87.718,50  c-0.42-20.228-16.833-38.147-37.714-37.714C29.776,12.706,11.858,29.119,12.291,50c0.42,20.229,16.833,38.147,37.714,37.714  C70.885,87.28,87.285,70.88,87.718,50z M39.34,69.331c-3.021,2.714,1.439,7.144,4.445,4.445c3.717-3.339,8.655-3.449,12.44-0.15  c3.041,2.65,7.506-1.777,4.445-4.445C54.217,63.559,45.717,63.603,39.34,69.331z M39.036,46.424c2.289,3.309,7.74,0.171,5.427-3.172  c-3.781-5.467-10.184-7.952-16.675-6.354c-3.935,0.968-2.265,7.03,1.671,6.061C33.065,42.071,36.894,43.327,39.036,46.424z   M71.948,36.897c-6.491-1.597-12.894,0.887-16.675,6.354c-2.312,3.343,3.139,6.482,5.427,3.172c2.141-3.097,5.971-4.353,9.577-3.466  C74.213,43.927,75.882,37.865,71.948,36.897z\"/>',\n    \"tristesse\": '<path fill=\"#989A9C\" d=\"M36.169,51.209c-4.813,0-4.813-7.463,0-7.463S40.982,51.209,36.169,51.209z M63.847,43.746  c-4.813,0-4.813,7.463,0,7.463C68.66,51.209,68.66,43.746,63.847,43.746z M94.004,50c-0.489,23.571-19.669,44.504-43.999,43.999  C26.433,93.51,5.5,74.33,6.005,50C6.495,26.429,25.674,5.496,50.004,6.001C74.336,6.506,93.499,25.669,94.004,50z M87.718,50  c-0.42-20.228-16.833-38.147-37.714-37.714C29.776,12.706,11.858,29.119,12.291,50c0.42,20.229,16.833,38.147,37.714,37.714  C70.885,87.28,87.285,70.88,87.718,50z M37.549,72.223c-3.022,2.714,1.439,7.144,4.445,4.445c4.785-4.298,11.153-4.424,16.021-0.182  c3.041,2.65,7.506-1.777,4.445-4.445C54.92,65.472,44.998,65.532,37.549,72.223z M29.066,42.308  c1.084-5.176,5.016-8.656,10.22-9.393c1.699-0.241,2.605-2.376,2.195-3.866c-0.497-1.808-2.171-2.435-3.866-2.195  c-7.185,1.017-13.127,6.705-14.61,13.783C22.177,44.591,28.236,46.274,29.066,42.308z M62.085,26.854  c-1.695-0.24-3.369,0.387-3.866,2.195c-0.41,1.49,0.496,3.625,2.195,3.866c5.203,0.737,9.136,4.217,10.22,9.393  c0.831,3.966,6.889,2.284,6.061-1.671C75.212,33.559,69.27,27.871,62.085,26.854z M26.355,64.213  c-0.128-0.299-0.193-0.65-0.162-1.062c-0.03-0.414,0.037-0.766,0.167-1.067c0.67-3.381,3.161-6.477,5.238-9.086  c0.739-0.929,2.594-0.929,3.333,0c2.721,3.418,7.191,8.737,4.645,13.329C36.136,72.532,27.668,70.561,26.355,64.213z M34.815,61.155  c-0.457-0.814-1.041-1.745-1.626-2.616c-1.082,1.458-2.175,3.2-2.282,4.612c0.145,1.973,3.084,3.527,4.277,1.377  C35.891,63.252,35.481,62.343,34.815,61.155z\"/>',\n    \"peur\": '<path fill=\"#989A9C\" d=\"M36.17,51.209c-4.813,0-4.813-7.463,0-7.463C40.982,43.746,40.982,51.209,36.17,51.209z M63.847,43.746  c-4.813,0-4.813,7.463,0,7.463C68.66,51.209,68.66,43.746,63.847,43.746z M94.003,50c-0.489,23.571-19.668,44.503-43.998,43.998  C26.434,93.509,5.501,74.33,6.006,50C6.495,26.429,25.675,5.497,50.004,6.002C74.335,6.507,93.498,25.669,94.003,50z M87.717,50  c-0.42-20.228-16.833-38.146-37.713-37.713C29.776,12.707,11.858,29.12,12.292,50c0.42,20.228,16.833,38.146,37.713,37.713  C70.884,87.279,87.284,70.88,87.717,50z M38.04,69.605c-3.021,2.714,1.439,7.144,4.445,4.445c4.492-4.035,10.469-4.157,15.04-0.173  c3.041,2.65,7.506-1.777,4.445-4.444C54.727,63.122,45.195,63.178,38.04,69.605z M65.457,29.934  c-1.781-3.641-7.201-0.453-5.427,3.172c2.787,5.696,8.987,9.178,15.303,8.572c3.998-0.384,4.035-6.673,0-6.285  C71.019,35.807,67.363,33.829,65.457,29.934z M40.334,33.106c1.774-3.626-3.646-6.813-5.427-3.172  c-1.906,3.895-5.562,5.873-9.876,5.459c-4.035-0.387-3.998,5.902,0,6.285C31.348,42.285,37.547,38.802,40.334,33.106z\"/>',\n    \"joie\": '<path fill=\"#989A9C\" d=\"M36.061,43.699c4.849,0,4.849,7.52,0,7.52S31.211,43.699,36.061,43.699z M63.948,51.219  c4.849,0,4.849-7.52,0-7.52S59.099,51.219,63.948,51.219z M94.338,50C93.845,73.75,74.52,94.842,50.005,94.333  C26.254,93.84,5.162,74.515,5.671,50C6.164,26.25,25.489,5.158,50.005,5.667C74.52,6.176,93.829,25.484,94.338,50z M88.004,50  c-0.423-20.382-16.961-38.437-38-38c-20.382,0.423-38.437,16.961-38,38c0.423,20.382,16.961,38.437,38,38  C71.044,87.563,87.568,71.039,88.004,50z M62.828,64.763c-7.78,6.779-17.992,6.609-25.648-0.268  c-3.029-2.72-7.523,1.744-4.478,4.478c10.352,9.298,24.121,9.403,34.605,0.268C70.392,66.554,65.893,62.093,62.828,64.763z\"/>'\n}\n\nmsg.test = {\n    users_nb: 241,\n    votants: 87,\n    votes_nb: 741,\n    votes_pr: 3.07,\n    votes_te: \"postive\", \n    votes_ev: 1.47,\n    humeurs_pc: 47,\n    humeurs_re: \"\",\n    humeurs_te: \"négative\",\n    humeurs_ev: -2.7,\n    humeur_path: humeurs['joie']\n}\n\nlet mustache = global.get('mustacheModule');\nmsg.content.content = mustache.render(msg.payload, msg.test)\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 360,
-        "y": 280,
+        "x": 560,
+        "y": 300,
         "wires": [
             [
-                "5834250d.1cc0bc"
+                "e515d3a5.15edb"
             ]
         ]
     },
@@ -540,141 +521,9 @@
         "id": "77cee08e.b57bc",
         "type": "subflow:f2f4cbd3.ad9a78",
         "z": "5a8d8e81.c9b3a",
-        "x": 510,
+        "x": 870,
         "y": 440,
         "wires": []
-    },
-    {
-        "id": "da74f4f5.4ff3a8",
-        "type": "http in",
-        "z": "988517b8.810bd8",
-        "name": "",
-        "url": "/mymood",
-        "method": "get",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 137.50002670288086,
-        "y": 160.00000381469727,
-        "wires": [
-            [
-                "7486a260.c33c7c"
-            ]
-        ]
-    },
-    {
-        "id": "4270ae56.93645",
-        "type": "function",
-        "z": "988517b8.810bd8",
-        "name": "mustache",
-        "func": "let mustache = global.get('mustacheModule');\n\nmsg.payload = mustache.render(msg.payload, {\n    \"serverUrl\": global.get('CONFIG').server.host,\n    \"pictures\" : msg.selectedPictures\n})\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 1467.5000267028809,
-        "y": 160.00000381469727,
-        "wires": [
-            [
-                "953daff6.5ac56"
-            ]
-        ]
-    },
-    {
-        "id": "2e9f0c77.b9e334",
-        "type": "file in",
-        "z": "988517b8.810bd8",
-        "name": "",
-        "filename": "webapp/static/mymood.html",
-        "format": "utf8",
-        "chunk": false,
-        "sendError": false,
-        "x": 1207.5000267028809,
-        "y": 160.00000381469727,
-        "wires": [
-            [
-                "4270ae56.93645"
-            ]
-        ]
-    },
-    {
-        "id": "953daff6.5ac56",
-        "type": "http response",
-        "z": "988517b8.810bd8",
-        "name": "",
-        "statusCode": "",
-        "headers": {},
-        "x": 1677.5000267028809,
-        "y": 160.00000381469727,
-        "wires": []
-    },
-    {
-        "id": "7486a260.c33c7c",
-        "type": "google-spreadsheet",
-        "z": "988517b8.810bd8",
-        "name": "",
-        "auth": "1b98bf04.b1d071",
-        "sheet": "1tJFncmR66AS55qmLiSWH1OvpGTirCiNDvO1_vQ4LDe4",
-        "range": "pictures",
-        "method": "append",
-        "direction": "line",
-        "action": "get",
-        "clear": false,
-        "line": false,
-        "column": true,
-        "fields": "all",
-        "save": "_sheet",
-        "selfields": [
-            ""
-        ],
-        "cell_l": "",
-        "cell_c": "",
-        "input": "",
-        "output": "payload",
-        "saveType": "global",
-        "inputType": "msg",
-        "outputType": "msg",
-        "sheetType": "str",
-        "rangeType": "str",
-        "cell_lType": "str",
-        "cell_cType": "str",
-        "x": 487.50002670288086,
-        "y": 160.00000381469727,
-        "wires": [
-            [
-                "d1f4763a.7d2078"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "754f96b5.54d1a8",
-        "type": "function",
-        "z": "988517b8.810bd8",
-        "name": "select random",
-        "func": "msg.selectedPictures = [];\n\nfor (let type of Object.keys(msg.pictures)) {\n    let pictures = msg.pictures[type];\n    let max = pictures.length;\n    \n    let index = Math.floor(Math.random() * Math.floor(max));\n    msg.selectedPictures.push(pictures[index]);\n    \n    \n}\n\nfunction shuffle(a) {\n    for (let i = a.length - 1; i > 0; i--) {\n        const j = Math.floor(Math.random() * (i + 1));\n        [a[i], a[j]] = [a[j], a[i]];\n    }\n    return a;\n}\n\nshuffle(msg.selectedPictures)\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 967.5000267028809,
-        "y": 160.00000381469727,
-        "wires": [
-            [
-                "2e9f0c77.b9e334"
-            ]
-        ]
-    },
-    {
-        "id": "d1f4763a.7d2078",
-        "type": "function",
-        "z": "988517b8.810bd8",
-        "name": "index by tag",
-        "func": "msg.pictures = {};\n\nfor(let picture of msg.payload) {\n    msg.pictures[picture.type] = msg.pictures[picture.type] || [];\n    msg.pictures[picture.type].push(picture);\n}\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 777.5000267028809,
-        "y": 160.00000381469727,
-        "wires": [
-            [
-                "754f96b5.54d1a8"
-            ]
-        ]
     },
     {
         "id": "eade6041.28d47",
@@ -687,8 +536,8 @@
         "repeat": "",
         "crontab": "",
         "once": false,
-        "x": 110,
-        "y": 60,
+        "x": 130,
+        "y": 140,
         "wires": [
             [
                 "fcd8aecc.ef51"
@@ -703,8 +552,8 @@
         "active": true,
         "console": "false",
         "complete": "false",
-        "x": 490,
-        "y": 60,
+        "x": 550,
+        "y": 140,
         "wires": []
     },
     {
@@ -716,8 +565,8 @@
         "format": "utf8",
         "chunk": false,
         "sendError": false,
-        "x": 420,
-        "y": 240,
+        "x": 220,
+        "y": 280,
         "wires": [
             [
                 "5f1bae73.7dbe6"
@@ -731,25 +580,9 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 910,
-        "y": 240,
+        "x": 970,
+        "y": 340,
         "wires": []
-    },
-    {
-        "id": "4d05e4dc.80860c",
-        "type": "function",
-        "z": "895a135a.82608",
-        "name": "Build",
-        "func": "const moment = global.get('tzModule');\nlet now = moment().tz('Europe/Paris')\n\nlet alert = {\n    \"date\": now.toISOString(),\n    \"user\": \"12345\", \n    \"type\": \"harcelement\",\n    \"role\": \"witness\",\n    \"text\": \"\", \n    \"text_score\": 0,\n    \"attachment\" : \"\", \n    \"attachment_type\": \"\", \n    \"attachment_score\": 0,\n    \"tags\": []\n}\n\n// Comment userID is REQUIRED\nif (!msg.payload.user){ return msg; }\n\nalert.text = msg.payload.text;\nalert.user = msg.payload.user;\nalert.type = msg.payload.type; // FIXME: relies to the UI\nalert.role = \"witness\";        // FIXME: relies to the UI\n\n// FIXME: Handle attachments\n\n\nmsg.alert   = alert;\nmsg.payload = alert.text\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 290,
-        "y": 420,
-        "wires": [
-            [
-                "82033db2.c8d87"
-            ]
-        ]
     },
     {
         "id": "b9d63410.1f94e8",
@@ -760,11 +593,10 @@
         "method": "post",
         "upload": true,
         "swaggerDoc": "",
-        "x": 120,
+        "x": 140,
         "y": 420,
         "wires": [
             [
-                "4d05e4dc.80860c",
                 "77d367af.fbd378"
             ]
         ]
@@ -777,144 +609,8 @@
         "active": true,
         "console": "false",
         "complete": "false",
-        "x": 310,
-        "y": 380,
-        "wires": []
-    },
-    {
-        "id": "47575baa.144464",
-        "type": "http response",
-        "z": "895a135a.82608",
-        "name": "",
-        "statusCode": "",
-        "headers": {},
-        "x": 770,
-        "y": 520,
-        "wires": []
-    },
-    {
-        "id": "82033db2.c8d87",
-        "type": "subflow:6baaf188.a25a6",
-        "z": "895a135a.82608",
-        "name": "",
-        "x": 440,
+        "x": 330,
         "y": 460,
-        "wires": [
-            [
-                "32eb95a7.6491fa",
-                "87277541.bb95e8"
-            ]
-        ]
-    },
-    {
-        "id": "87277541.bb95e8",
-        "type": "function",
-        "z": "895a135a.82608",
-        "name": "Update",
-        "func": "let alert = msg.alert\n\nalert.text_score = msg.results.score\nalert.tags.concat(msg.results.intents)\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 600,
-        "y": 480,
-        "wires": [
-            [
-                "dd873095.9e245"
-            ]
-        ]
-    },
-    {
-        "id": "32eb95a7.6491fa",
-        "type": "debug",
-        "z": "895a135a.82608",
-        "name": "",
-        "active": true,
-        "console": "false",
-        "complete": "results",
-        "x": 610,
-        "y": 440,
-        "wires": []
-    },
-    {
-        "id": "dd873095.9e245",
-        "type": "nosql",
-        "z": "895a135a.82608",
-        "name": "",
-        "server-type": "mongodb",
-        "collection": "alerts",
-        "collectionType": "str",
-        "key": "",
-        "offset": "",
-        "offsetType": "num",
-        "limit": "",
-        "limitType": "num",
-        "value": "alert",
-        "operation": "add",
-        "merge": false,
-        "server-mongodb": "90831821.61a9d8",
-        "server-nedb": "",
-        "x": 760,
-        "y": 480,
-        "wires": [
-            [
-                "47575baa.144464"
-            ]
-        ]
-    },
-    {
-        "id": "41645e82.6c064",
-        "type": "nosql",
-        "z": "895a135a.82608",
-        "name": "",
-        "server-type": "mongodb",
-        "collection": "alerts",
-        "collectionType": "str",
-        "key": "{}",
-        "offset": "",
-        "offsetType": "num",
-        "limit": "",
-        "limitType": "num",
-        "value": "",
-        "operation": "find",
-        "merge": false,
-        "server-mongodb": "90831821.61a9d8",
-        "server-nedb": "",
-        "x": 310,
-        "y": 680,
-        "wires": [
-            [
-                "e70104ec.4e9d98"
-            ]
-        ]
-    },
-    {
-        "id": "9c0914eb.a25aa8",
-        "type": "inject",
-        "z": "895a135a.82608",
-        "name": "List All Alerts",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "x": 110,
-        "y": 680,
-        "wires": [
-            [
-                "41645e82.6c064"
-            ]
-        ]
-    },
-    {
-        "id": "e70104ec.4e9d98",
-        "type": "debug",
-        "z": "895a135a.82608",
-        "name": "",
-        "active": true,
-        "console": "false",
-        "complete": "false",
-        "x": 490,
-        "y": 680,
         "wires": []
     },
     {
@@ -988,95 +684,368 @@
         "wires": []
     },
     {
-        "id": "1fe90487.80d5cb",
+        "id": "fd6758.6e2428a8",
         "type": "http in",
-        "z": "988517b8.810bd8",
+        "z": "895a135a.82608",
         "name": "",
-        "url": "/confirm",
+        "url": "/mood",
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 132.50001525878906,
-        "y": 295.00000762939453,
+        "x": 140,
+        "y": 300,
         "wires": [
             [
-                "b62a7c18.47d52"
+                "35a0bab4.7831d6"
             ]
         ]
     },
     {
-        "id": "b6896332.867ca",
+        "id": "f41e56b7.4957e8",
+        "type": "http in",
+        "z": "895a135a.82608",
+        "name": "",
+        "url": "/alert",
+        "method": "get",
+        "upload": true,
+        "swaggerDoc": "",
+        "x": 140,
+        "y": 380,
+        "wires": [
+            [
+                "fb91dbaa.6043a8"
+            ]
+        ]
+    },
+    {
+        "id": "e515d3a5.15edb",
+        "type": "template",
+        "z": "5a8d8e81.c9b3a",
+        "name": "Script",
+        "field": "content.script",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "var colors = [\"#f00f7c\", '#17a2b8', '#80d011', '#fcdb03'];\nvar color_blue = [\"#117888\", \"#16a0b6\", \"#1cc8e3\", \"#49d3e9\", \"#77deee\", \"#a4e9f4\", \"#d2f4f9\"];\nvar color_pink = [\"#90094a\", \"#c00c63\", \"#f00f7c\", \"#f33f96\", \"#f66fb0\", \"#f99fcb\", \"#fccfe5\"];\nvar color_yell = [\"#926507\", \"#c38809\", \"#f4aa0b\", \"#f6bb3c\", \"#f8cc6d\", \"#fadd9e\", \"#fceecf\"];\nvar color_gree = [\"#6e8415\", \"#93b01c\", \"#b7dd22\", \"#c6e34f\", \"#d4ea7b\", \"#e2f1a7\", \"#f1f8d3\"];\n\nChart.defaults.global.legend.display = false;\n\nvar ctx_c = $(\"#analytics-1 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'doughnut',\n    data: {\n        labels: [\"Ont participé\", \"N'ont pas participé\"],\n        datasets: [{\n            data: [247, 154],\n            backgroundColor: color_blue,\n            borderColor: 'rgba(233, 236, 239, 1)',\n            borderWidth: 2\n        }]\n    }\n});\n\nctx_c = $(\"#analytics-2 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'bar',\n    data: {\n        labels: [\"1\", \"2\", \"3\", \"4+\"],\n        datasets: [{\n            data: [168, 48, 21, 12],\n            backgroundColor: color_blue,\n            borderColor: 'rgba(233, 236, 239, 1)',\n            borderWidth: 2\n        }]\n    }\n});\n\nctx_c = $(\"#analytics-3 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'line',\n    data: {\n        labels: [\"Lundi\", \"Mardi\", \"Mercredi\", \"Jeudi\", \"Vendredi\", \"Samedi\", \"Dimanche\"],\n        datasets: [{\n            data: [52, 81, 108, 6],\n            borderColor: \"#117888\",\n        }]\n    }\n});\n\nctx_c = $(\"#analytics-4 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'doughnut',\n    data: {\n        labels: [\"Colère\", \"Tristesse\", \"Peur\",  \"Joie\"],\n        datasets: [{\n            data: [17,12,24,48],\n            backgroundColor: colors,\n            borderColor: 'rgba(233, 236, 239, 1)',\n            borderWidth: 2\n        }]\n    }\n});\n\nctx_c = $(\"#analytics-5 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'bar',\n    data: {\n        labels: [\"Colère\", \"Tristesse\", \"Peur\",  \"Joie\"],\n        datasets: [{\n            data: [168, 48, 21, 4, 4, 2],\n            backgroundColor: colors,\n            borderColor: 'rgba(233, 236, 239, 1)',\n            borderWidth: 2\n        }]\n    }\n});\n\nctx_c = $(\"#analytics-6 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'line',\n    data: {\n        labels: [\"Lundi\", \"Mardi\", \"Mercredi\", \"Jeudi\", \"Vendredi\", \"Samedi\", \"Dimanche\"],\n        datasets: [{\n            label: \"Colère\",\n            data: [22,47,2,3],\n            borderColor: \"#f00f7c\"\n        },\n        {\n            label: \"Tristesse\",\n            data: [18, 24, 38, 56],\n            borderColor: \"#17a2b8\",\n        },\n        {\n            label: \"Peur\",\n            data: [22, 61, 88, 16],\n            borderColor: \"#80d011\",\n        },\n        {\n            label: \"Joie\",\n            data: [52, 81, 108, 6],\n            borderColor: \"#fcdb03\",\n        }]\n    },\n    options: {\n        legend: {\n            display: true\n        }\n    }\n});\n",
+        "output": "str",
+        "x": 690,
+        "y": 300,
+        "wires": [
+            [
+                "77cee08e.b57bc"
+            ]
+        ]
+    },
+    {
+        "id": "d62141db.cc1ea",
         "type": "function",
-        "z": "988517b8.810bd8",
-        "name": "mustache",
-        "func": "let mustache = global.get('mustacheModule');\n\nmsg.payload = mustache.render(msg.payload, {\n    \"serverUrl\": global.get('CONFIG').server.host,\n    \"pictures\" : msg.selectedPictures\n})\nreturn msg;",
+        "z": "895a135a.82608",
+        "name": "Create Alert ?",
+        "func": "\n// FIXME: Compute Alert from Mood\n// Is it a bad mood ?\n// Compare to previous moods\n// What about comment content ?\nreturn [msg,undefined];\n\nlet alert = {\n    \"date\": now.toISOString(),\n    \"user\": msg.mood.user, \n    \"type\": \"algorithm\",\n    \"role\": \"algorithm\",\n    \"mood\": 0,\n    \"text\": msg.mood.text, \n    \"text_score\": msg.mood.text_score,\n    \"state\": 0,\n    \"state_text\": \"\",\n    \"attachment\" : \"\", \n    \"attachment_type\": \"\", \n    \"attachment_score\": 0,\n    \"tags\": [].concat(msg.mood.tags),\n    \"involve\": []\n}\n\nmsg.alert = alert;\nreturn [undefined, msg];",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 800,
+        "y": 380,
+        "wires": [
+            [
+                "53ebc9df.da9d38"
+            ],
+            [
+                "53ebc9df.da9d38"
+            ]
+        ]
+    },
+    {
+        "id": "53ebc9df.da9d38",
+        "type": "debug",
+        "z": "895a135a.82608",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "alert",
+        "x": 980,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "69e34f9b.99e45",
+        "type": "function",
+        "z": "6baaf188.a25a6",
+        "name": "RexExp",
+        "func": "let text = msg.docs.documents[0].text\n\nif (text.match(/suicide/)){\n    msg.results.intents.push(\"suicide\")\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 642.5000152587891,
-        "y": 295.00000762939453,
+        "x": 840,
+        "y": 120,
         "wires": [
             [
-                "7f0e2fd9.aa064"
+                "83198be3.848fe8"
             ]
         ]
     },
     {
-        "id": "b62a7c18.47d52",
-        "type": "file in",
-        "z": "988517b8.810bd8",
+        "id": "fb91dbaa.6043a8",
+        "type": "function",
+        "z": "895a135a.82608",
+        "name": "Build",
+        "func": "const moment = global.get('tzModule');\nlet now = moment().tz('Europe/Paris')\n\nlet feedback = {\n    \"date\": now.toISOString(),\n    \"user\": \"12345\", \n    \"type\": \"mood\",\n    \"role\": \"\",\n    \"mood\": 0,\n    \"text\": \"\", \n    \"text_score\": 0,\n    \"state\": 0,\n    \"state_text\": \"\",\n    \"attachment\" : \"\", \n    \"attachment_type\": \"\", \n    \"attachment_score\": 0,\n    \"tags\": [],\n    \"involve\": []\n}\n\n// Comment userID is REQUIRED\nif (!msg.payload.user){ return msg; }\n\nfeedback.text = msg.payload.text\nfeedback.user = msg.payload.user\nfeedback.role = msg.payload.role // FIXME: relies to the UI\n\n\nmsg.feedback = feedback\nmsg.payload  = feedback.text\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 310,
+        "y": 340,
+        "wires": [
+            [
+                "626bf870.4d11b8"
+            ]
+        ]
+    },
+    {
+        "id": "35a0bab4.7831d6",
+        "type": "function",
+        "z": "895a135a.82608",
+        "name": "Check",
+        "func": "msg.mood = true\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 310,
+        "y": 300,
+        "wires": [
+            [
+                "fb91dbaa.6043a8"
+            ]
+        ]
+    },
+    {
+        "id": "d9bab7f4.5260c8",
+        "type": "debug",
+        "z": "5a8d8e81.c9b3a",
         "name": "",
-        "filename": "webapp/static/confirm.html",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 343,
+        "y": 191,
+        "wires": []
+    },
+    {
+        "id": "308bc6bd.9b320a",
+        "type": "change",
+        "z": "5a8d8e81.c9b3a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "params",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 180,
+        "y": 240,
+        "wires": [
+            [
+                "cf3e7606.11ac08"
+            ]
+        ]
+    },
+    {
+        "id": "d83c8231.07415",
+        "type": "file in",
+        "z": "64b74493.10b1bc",
+        "name": "",
+        "filename": "webapp/static/main-pupil.html",
         "format": "utf8",
         "chunk": false,
         "sendError": false,
-        "x": 382.50001525878906,
-        "y": 295.00000762939453,
+        "x": 270,
+        "y": 120,
         "wires": [
             [
-                "b6896332.867ca"
+                "52d6d507.257b6c"
             ]
         ]
     },
     {
-        "id": "7f0e2fd9.aa064",
+        "id": "52d6d507.257b6c",
+        "type": "function",
+        "z": "64b74493.10b1bc",
+        "name": "mustache",
+        "func": "let mustache = global.get('mustacheModule');\nlet url = global.get('CONFIG').server.host;\n\nmsg.content.username = \"Leo\";\nmsg.content.pupilCss = ' <link rel=\"stylesheet\" href=\"'+url+'/static/css/pupil.css\">';\nmsg.content.serverUrl = url;\nlet tabs = [\"main\", \"life\", \"book\", \"marks\", \"profile\"];\n\nfor(let tab of tabs) {\n    msg.content[tab+\"Active\"] = msg.page == tab;\n}\n\n\nmsg.payload = mustache.render(msg.payload, msg.content);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 520,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "be9be07d.421dd",
+        "type": "http in",
+        "z": "988517b8.810bd8",
+        "name": "",
+        "url": "/mymood",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 265,
+        "y": 262.5,
+        "wires": [
+            [
+                "da30b494.28cb78"
+            ]
+        ]
+    },
+    {
+        "id": "f986fce0.a023a",
+        "type": "function",
+        "z": "988517b8.810bd8",
+        "name": "render",
+        "func": "let mustache = global.get('mustacheModule');\n\nmsg.payload = mustache.render(msg.payload, {\n    \"serverUrl\": global.get('CONFIG').server.host,\n    \"pictures\" : msg.selectedPictures,\n    \"username\" : \"Leo\"\n})\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1585,
+        "y": 262.5,
+        "wires": [
+            [
+                "97765c69.74232"
+            ]
+        ]
+    },
+    {
+        "id": "1693c246.9df92e",
+        "type": "file in",
+        "z": "988517b8.810bd8",
+        "name": "",
+        "filename": "webapp/static/mymood.html",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "x": 1335,
+        "y": 262.5,
+        "wires": [
+            [
+                "f986fce0.a023a"
+            ]
+        ]
+    },
+    {
+        "id": "a8c0f553.bc4da8",
         "type": "http response",
         "z": "988517b8.810bd8",
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 852.5000152587891,
-        "y": 295.00000762939453,
+        "x": 2177.499973297119,
+        "y": 262.49999618530273,
         "wires": []
     },
     {
-        "id": "967c3d9e.4d187",
+        "id": "da30b494.28cb78",
+        "type": "google-spreadsheet",
+        "z": "988517b8.810bd8",
+        "name": "",
+        "auth": "1b98bf04.b1d071",
+        "sheet": "1tJFncmR66AS55qmLiSWH1OvpGTirCiNDvO1_vQ4LDe4",
+        "range": "pictures",
+        "method": "append",
+        "direction": "line",
+        "action": "get",
+        "clear": false,
+        "line": false,
+        "column": true,
+        "fields": "all",
+        "save": "_sheet",
+        "selfields": [
+            ""
+        ],
+        "cell_l": "",
+        "cell_c": "",
+        "input": "",
+        "output": "payload",
+        "saveType": "global",
+        "inputType": "msg",
+        "outputType": "msg",
+        "sheetType": "str",
+        "rangeType": "str",
+        "cell_lType": "str",
+        "cell_cType": "str",
+        "x": 615,
+        "y": 262.5,
+        "wires": [
+            [
+                "4705e21b.5a5e5c"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "d19e3343.23eda",
+        "type": "function",
+        "z": "988517b8.810bd8",
+        "name": "select random",
+        "func": "msg.selectedPictures = [];\n\nfor (let type of Object.keys(msg.pictures)) {\n    let pictures = msg.pictures[type];\n    let max = pictures.length;\n    \n    let index = Math.floor(Math.random() * Math.floor(max));\n    msg.selectedPictures.push(pictures[index]);\n    \n    \n}\n\nfunction shuffle(a) {\n    for (let i = a.length - 1; i > 0; i--) {\n        const j = Math.floor(Math.random() * (i + 1));\n        [a[i], a[j]] = [a[j], a[i]];\n    }\n    return a;\n}\n\nshuffle(msg.selectedPictures)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1095,
+        "y": 262.5,
+        "wires": [
+            [
+                "1693c246.9df92e"
+            ]
+        ]
+    },
+    {
+        "id": "4705e21b.5a5e5c",
+        "type": "function",
+        "z": "988517b8.810bd8",
+        "name": "index by tag",
+        "func": "msg.pictures = {};\n\nfor(let picture of msg.payload) {\n    msg.pictures[picture.type] = msg.pictures[picture.type] || [];\n    msg.pictures[picture.type].push(picture);\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 905,
+        "y": 262.5,
+        "wires": [
+            [
+                "d19e3343.23eda"
+            ]
+        ]
+    },
+    {
+        "id": "c79e3e55.00614",
         "type": "http response",
         "z": "988517b8.810bd8",
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 1235.0000190734863,
-        "y": 422.50000953674316,
+        "x": 1362.4999923706055,
+        "y": 525.0000057220459,
         "wires": []
     },
     {
-        "id": "94bea754.e100a8",
+        "id": "58db8b6b.ccaa64",
         "type": "function",
         "z": "988517b8.810bd8",
         "name": "redirect",
-        "func": "msg.payload = {\n    redirect: global.get('CONFIG').server.host + '/confirm'\n}\nreturn msg;",
+        "func": "msg.payload = {\n    redirect: global.get('CONFIG').server.host + '/me#confirm'\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1005.0000190734863,
-        "y": 422.50000953674316,
+        "x": 1132.4999923706055,
+        "y": 525.0000057220459,
         "wires": [
             [
-                "967c3d9e.4d187"
+                "c79e3e55.00614"
             ]
         ]
     },
     {
-        "id": "f155b458.245e18",
+        "id": "63fb972a.de24f8",
         "type": "http in",
         "z": "988517b8.810bd8",
         "name": "",
@@ -1084,16 +1053,16 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 145.00001907348633,
-        "y": 422.50000953674316,
+        "x": 272.49999237060547,
+        "y": 525.0000057220459,
         "wires": [
             [
-                "cb7d719b.a05fe"
+                "5ae98d8f.758c94"
             ]
         ]
     },
     {
-        "id": "ec1a1f1a.a18d1",
+        "id": "6aea38b6.466808",
         "type": "nosql",
         "z": "988517b8.810bd8",
         "name": "",
@@ -1110,122 +1079,146 @@
         "merge": false,
         "server-mongodb": "90831821.61a9d8",
         "server-nedb": "",
-        "x": 655.0000190734863,
-        "y": 422.50000953674316,
+        "x": 782.4999923706055,
+        "y": 525.0000057220459,
         "wires": [
             [
-                "94bea754.e100a8"
+                "58db8b6b.ccaa64"
             ]
         ]
     },
     {
-        "id": "cb7d719b.a05fe",
+        "id": "5ae98d8f.758c94",
         "type": "function",
         "z": "988517b8.810bd8",
         "name": "prepare mood",
         "func": "const moment = global.get('tzModule');\nlet now = moment().tz('Europe/Paris');\n\nmsg.payload = {\n    date: now.toISOString(),\n    user: '123',\n    \"text\": msg.req.body.comment,\n    \"text_score\": 0,\n    \"picture\": msg.req.body.picture,\n    \"tags\": []\n};\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 389.0000190734863,
-        "y": 423.50000953674316,
+        "x": 516.4999923706055,
+        "y": 526.0000057220459,
         "wires": [
             [
-                "ec1a1f1a.a18d1"
+                "6aea38b6.466808"
             ]
         ]
     },
     {
-        "id": "fd6758.6e2428a8",
+        "id": "b21f227d.81377",
         "type": "http in",
-        "z": "895a135a.82608",
+        "z": "988517b8.810bd8",
         "name": "",
-        "url": "/mood",
+        "url": "/me",
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 120,
-        "y": 220,
+        "x": 247.49997329711914,
+        "y": 162.49999618530273,
         "wires": [
             [
-                "7f98c098.eeac5"
+                "a33e93eb.78a7d"
             ]
         ]
     },
     {
-        "id": "f41e56b7.4957e8",
-        "type": "http in",
-        "z": "895a135a.82608",
+        "id": "2e21b725.8ab8f8",
+        "type": "http response",
+        "z": "988517b8.810bd8",
         "name": "",
-        "url": "/alert",
-        "method": "get",
-        "upload": true,
-        "swaggerDoc": "",
-        "x": 120,
-        "y": 460,
+        "statusCode": "",
+        "headers": {},
+        "x": 1257.4999732971191,
+        "y": 162.49999618530273,
+        "wires": []
+    },
+    {
+        "id": "a33e93eb.78a7d",
+        "type": "file in",
+        "z": "988517b8.810bd8",
+        "name": "",
+        "filename": "webapp/static/me.html",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "x": 497.49997329711914,
+        "y": 162.49999618530273,
         "wires": [
             [
-                "4d05e4dc.80860c"
+                "92062d45.5af7c"
             ]
         ]
     },
     {
-        "id": "5834250d.1cc0bc",
+        "id": "92062d45.5af7c",
         "type": "function",
-        "z": "5a8d8e81.c9b3a",
-        "name": "Content",
-        "func": "\nlet mustache = global.get('mustacheModule');\nmsg.content.content = mustache.render(msg.payload, msg.test)\n\nreturn msg;",
+        "z": "988517b8.810bd8",
+        "name": "render",
+        "func": "let mustache = global.get('mustacheModule');\n\nmsg.payload = mustache.render(msg.payload, {\n    serverUrl: global.get('CONFIG').server.host\n})\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 540,
-        "y": 280,
+        "x": 717.4999732971191,
+        "y": 162.49999618530273,
         "wires": [
             [
-                "e515d3a5.15edb"
+                "c2f99bd7.6b7b78"
             ]
         ]
     },
     {
-        "id": "e515d3a5.15edb",
-        "type": "template",
-        "z": "5a8d8e81.c9b3a",
-        "name": "Script",
-        "field": "content.script",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "var colors = ['#17a2b8', '#f00f7c','#fcdb03','#a1db24','#f2a20d','#ff0000','#bf40bf'];\nvar color_blue = [\"#117888\", \"#16a0b6\", \"#1cc8e3\", \"#49d3e9\", \"#77deee\", \"#a4e9f4\", \"#d2f4f9\"];\nvar color_pink = [\"#90094a\", \"#c00c63\", \"#f00f7c\", \"#f33f96\", \"#f66fb0\", \"#f99fcb\", \"#fccfe5\"];\nvar color_yell = [\"#926507\", \"#c38809\", \"#f4aa0b\", \"#f6bb3c\", \"#f8cc6d\", \"#fadd9e\", \"#fceecf\"];\nvar color_gree = [\"#6e8415\", \"#93b01c\", \"#b7dd22\", \"#c6e34f\", \"#d4ea7b\", \"#e2f1a7\", \"#f1f8d3\"];\n\nChart.defaults.global.legend.display = false;\n\nvar ctx_c = $(\"#analytics-1 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'pie',\n    data: {\n        labels: [\"Ont participé\", \"N'ont pas participés\"],\n        datasets: [{\n            data: [247, 154],\n            backgroundColor: color_blue,\n            borderColor: ['#e9ecef'],\n            borderWidth: 2\n        }]\n    }\n});\n\nctx_c = $(\"#analytics-5 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'pie',\n    data: {\n        labels: [\"Colère\", \"Tristesse\", \"Peur\",  \"Joie\"],\n        datasets: [{\n            data: [17,12,24,48],\n            backgroundColor: color_blue,\n            borderColor: ['#e9ecef'],\n            borderWidth: 2\n        }]\n    }\n});\n",
-        "output": "str",
-        "x": 530,
-        "y": 320,
-        "wires": [
-            [
-                "77cee08e.b57bc"
-            ]
-        ]
-    },
-    {
-        "id": "12927916.b3c807",
-        "type": "subflow:c7191305.b25f8",
-        "z": "895a135a.82608",
-        "x": 770,
-        "y": 300,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "d62141db.cc1ea",
+        "id": "97765c69.74232",
         "type": "function",
-        "z": "895a135a.82608",
-        "name": "",
-        "func": "\nreturn msg;",
+        "z": "988517b8.810bd8",
+        "name": "content",
+        "func": "let serverUrl = global.get('CONFIG').server.host;\n\nmsg.content = {\n    customContent: msg.payload,\n    customCss: '<link href=\"'+serverUrl+'/static/css/mymood.css\" rel=\"stylesheet\">',\n    customJs: '<script type=\"text/javascript\" src=\"'+serverUrl+'/static/js/mymood.js\"></script>'\n}\nmsg.page = \"life\"\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 610,
-        "y": 300,
+        "x": 1767.4999732971191,
+        "y": 262.49999618530273,
         "wires": [
             [
-                "12927916.b3c807"
+                "c061a92d.501988"
+            ]
+        ]
+    },
+    {
+        "id": "c061a92d.501988",
+        "type": "subflow:64b74493.10b1bc",
+        "z": "988517b8.810bd8",
+        "name": "",
+        "x": 1957.4999732971191,
+        "y": 262.49999618530273,
+        "wires": [
+            [
+                "a8c0f553.bc4da8"
+            ]
+        ]
+    },
+    {
+        "id": "c2f99bd7.6b7b78",
+        "type": "function",
+        "z": "988517b8.810bd8",
+        "name": "content",
+        "func": "let serverUrl = global.get('CONFIG').server.host;\n\nmsg.content = {\n    customContent: msg.payload,\n    customCss: '<link href=\"'+serverUrl+'/static/css/me.css\" rel=\"stylesheet\">',\n    customJs: '<script type=\"text/javascript\" src=\"'+serverUrl+'/static/js/me.js\"></script>'\n}\nmsg.page = \"main\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 907.4999732971191,
+        "y": 162.49999618530273,
+        "wires": [
+            [
+                "2b9296ba.da7b7a"
+            ]
+        ]
+    },
+    {
+        "id": "2b9296ba.da7b7a",
+        "type": "subflow:64b74493.10b1bc",
+        "z": "988517b8.810bd8",
+        "name": "",
+        "x": 1097.4999732971191,
+        "y": 162.49999618530273,
+        "wires": [
+            [
+                "2e21b725.8ab8f8"
             ]
         ]
     }

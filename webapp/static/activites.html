@@ -2,10 +2,12 @@
 
 <div class="col-3">
     <div class="card" id="analytics-1">
-        <canvas width="300" height="300" style="opacity:0.5;"></canvas>
+        <div style="position: relative;">
+            <div class="filltext"><b>{{votants}}</b>%</div>
+            <canvas width="300" height="300"></canvas>
+        </div>
         <span>
-            <b>Utilisateurs</b><br>
-            {{users_nb}} ({{users_pc}}% des utilisateurs inscrits)
+            <b>Votants</b>
         </span>
     </div>
 </div>
@@ -14,50 +16,50 @@
     <div class="card" id="analytics-2">
         <canvas width="300" height="300" ></canvas>
         <span>
-            <b>Participations</b><br>
-            {{votes_nb}} ({{votes_pr}} votes/utilisateur)
+            <b>Participations</b>
         </span>
     </div>
 </div>
 
 <div class="col-6">
     <div class="card" id="analytics-3">
-        <canvas width="600" height="300" ></canvas>
+        <canvas width="600" height="279" ></canvas>
         <span>
-            <b>Evolution des participations</b><br>
-            {{votes_te}} ({{votes_ev}}%)
-        </span>
-    </div>
-</div>
-
-
-<div class="col-3">
-    <div class="card" id="analytics-4">
-        <canvas width="300" height="300" ></canvas>
-        <span>
-            <b>Humeur globale</b><br>
-            {{humeurs_pc}}%
+            <b>Evolution des participations</b>
         </span>
     </div>
 </div>
 
 <div class="col-3">
-    <div class="card"  id="analytics-5">
-        <canvas width="300" height="300" ></canvas>
+    <div class="card"  id="analytics-4">
+            <div style="position: relative;">
+                <div class="fillsvg">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 98" xml:space="preserve">
+                       {{{humeur_path}}}
+                    </svg>
+                </div>
+                <canvas width="300" height="300"></canvas>
+            </div>
         <span>
-            <b>Répartition des humeurs</b><br>
-            {{humeurs_re}}
+            <b>Humeurs</b>
         </span>
     </div>
 </div>
 
+<div class="col-3">
+        <div class="card" id="analytics-5">
+            <canvas width="300" height="300" ></canvas>
+            <span>
+                <b>Commentaires</b>
+            </span>
+        </div>
+</div>
 
 <div class="col-6">
     <div class="card"  id="analytics-6">
-        <canvas width="600" height="300" ></canvas>
+        <canvas width="600" height="279" ></canvas>
         <span>
-            <b>Evolution des humeurs</b><br>
-            {{humeurs_te}} ({{humeurs_ev}}%)
+            <b>Evolution des humeurs</b>
         </span>
     </div>
 </div>

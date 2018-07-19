@@ -34,11 +34,11 @@
                 <div class="row" id="menu">
                     <div class="input-group" >
                         <div class="input-group-prepend">
-                            <button class="btn btn-light" type="button" style="border-radius: 0;">Semai</button>
-                            <button class="btn btn-light" type="button" style="border-radius: 0;">Mois</button>
-                            <button class="btn btn-light" type="button" style="border-radius: 0;">Trime</button>
-                            <button class="btn btn-light" type="button" style="border-radius: 0;">Semes</button>
-                            <button class="btn btn-light" type="button" style="border-radius: 0;">Année</button>
+                            <button class="btn btn-light {{#menu.semaine}}btn-active{{/menu.semaine}}" type="button" id="timeline-semaine">Semaine</button>
+                            <button class="btn btn-light {{#menu.mois}}btn-active{{/menu.mois}}" type="button" id="timeline-mois" >Mois</button>
+                            <button class="btn btn-light {{#menu.trimestre}}btn-active{{/menu.trimestre}}" type="button" id="timeline-trimestre">Trimes.</button>
+                            <button class="btn btn-light {{#menu.semestre}}btn-active{{/menu.semestre}}" type="button" id="timeline-semestre">Semes.</button>
+                            <button class="btn btn-light {{#menu.annee}}btn-active{{/menu.annee}}" type="button" id="timeline-annee">Année</button>
                         </div>
                         <input type="text" class="form-control" placeholder="Rechercher..." style="border-radius: 0; background-color: #e9ecef">
                         <div class="input-group-append" style="width:6%;">
@@ -68,6 +68,13 @@
             window.location.replace(BASEURL + link);
         })
 
+        $("#menu .btn-light").click(function() {
+            $("#menu .btn").removeClass("btn-active");
+            $(this).addClass("btn-active");
+            let id = $(this).attr('id').replace('timeline-', '')
+            window.location.replace(BASEURL + 'activites?timeline=' + id);
+        });
+
 
         {{{script}}}
 
@@ -79,6 +86,12 @@
 
     .btn-light {
         border: 1px solid #ced4da;
+        border-radius: 0;
+    }
+
+    .btn-active {
+        border-bottom: 0;
+        background-color: white;
     }
 
     .card {
@@ -89,6 +102,21 @@
         margin-bottom: 30px;
     }
 
+    .filltext {
+        color: #989A9C;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        font-size: 30px;
+        top: calc( 50% - 23px );
+    }
+
+    .fillsvg {
+        position: absolute;
+        width: 100px;
+        top: calc( 50% - 50px );
+        left: calc( 50% - 50px );
+    }
     .card > span {
         padding: 10px 5px 5px 5px;
     }
