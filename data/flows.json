@@ -75,6 +75,26 @@
         "out": []
     },
     {
+        "id": "c7191305.b25f8",
+        "type": "subflow",
+        "name": "Check Alerts",
+        "info": "",
+        "in": [
+            {
+                "x": 50,
+                "y": 30,
+                "wires": []
+            }
+        ],
+        "out": [
+            {
+                "x": 920,
+                "y": 40,
+                "wires": []
+            }
+        ]
+    },
+    {
         "id": "7a79c796.f6c888",
         "type": "ms-config",
         "z": "",
@@ -270,8 +290,8 @@
         "type": "subflow:6baaf188.a25a6",
         "z": "895a135a.82608",
         "name": "",
-        "x": 460,
-        "y": 140,
+        "x": 440,
+        "y": 220,
         "wires": [
             [
                 "6b5cc98c.5580b8",
@@ -287,8 +307,8 @@
         "active": true,
         "console": "false",
         "complete": "results",
-        "x": 630,
-        "y": 120,
+        "x": 610,
+        "y": 200,
         "wires": []
     },
     {
@@ -299,8 +319,8 @@
         "func": "let mood = msg.mood\n\nmood.text_score = msg.results.score\nmood.tags.concat(msg.results.intents)\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 620,
-        "y": 160,
+        "x": 600,
+        "y": 240,
         "wires": [
             [
                 "32576f8a.22ac7"
@@ -325,10 +345,13 @@
         "merge": false,
         "server-mongodb": "90831821.61a9d8",
         "server-nedb": "",
-        "x": 790,
-        "y": 160,
+        "x": 770,
+        "y": 240,
         "wires": [
-            []
+            [
+                "8bf4c5ec.f8ae38",
+                "d62141db.cc1ea"
+            ]
         ]
     },
     {
@@ -349,8 +372,8 @@
         "merge": false,
         "server-mongodb": "90831821.61a9d8",
         "server-nedb": "",
-        "x": 330,
-        "y": 220,
+        "x": 310,
+        "y": 60,
         "wires": [
             [
                 "28e66f0b.ebb4c"
@@ -366,8 +389,8 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 130,
-        "y": 100,
+        "x": 110,
+        "y": 180,
         "wires": [
             [
                 "7f98c098.eeac5",
@@ -383,12 +406,11 @@
         "func": "const moment = global.get('tzModule');\nlet now = moment().tz('Europe/Paris')\n\nlet mood = {\n    \"date\": now.toISOString(),\n    \"user\": \"12345\", \n    \"text\": \"\", \n    \"text_score\": 0,\n    \"tags\": []\n}\n\n// Comment UserID is REQUIRED\nif (!msg.payload.user){ return msg; }\n\nmood.text = msg.payload.text;\nmood.user = msg.payload.user;\n\n// FIXME: Handle attachments\nmsg.mood    = mood;\nmsg.payload = mood.text\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 310,
-        "y": 100,
+        "x": 290,
+        "y": 180,
         "wires": [
             [
-                "626bf870.4d11b8",
-                "8bf4c5ec.f8ae38"
+                "626bf870.4d11b8"
             ]
         ]
     },
@@ -400,8 +422,8 @@
         "active": true,
         "console": "false",
         "complete": "false",
-        "x": 330,
-        "y": 60,
+        "x": 310,
+        "y": 140,
         "wires": []
     },
     {
@@ -470,14 +492,14 @@
         "type": "function",
         "z": "5a8d8e81.c9b3a",
         "name": "Content",
-        "func": "msg.content = {\n    menu : {\n        activites : true,\n        alertes : false\n    },\n    content : msg.payload\n};\n\nreturn msg;",
+        "func": "msg.content = {\n    menu : {\n        activites : true,\n        alertes : false\n    }\n};\n\nmsg.test = {\n    users_nb: 241,\n    users_pc: 87,\n    votes_nb: 741,\n    votes_pr: 3.07,\n    votes_te: \"postive\", \n    votes_ev: 1.47,\n    humeurs_pc: 47,\n    humeurs_re: \"\",\n    humeurs_te: \"négative\",\n    humeurs_ev: -2.7\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 320,
-        "y": 320,
+        "x": 360,
+        "y": 280,
         "wires": [
             [
-                "77cee08e.b57bc"
+                "5834250d.1cc0bc"
             ]
         ]
     },
@@ -491,7 +513,7 @@
         "upload": false,
         "swaggerDoc": "",
         "x": 170,
-        "y": 400,
+        "y": 440,
         "wires": [
             [
                 "4c3e2ca8.46a8b4"
@@ -507,7 +529,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 320,
-        "y": 400,
+        "y": 440,
         "wires": [
             [
                 "77cee08e.b57bc"
@@ -519,7 +541,7 @@
         "type": "subflow:f2f4cbd3.ad9a78",
         "z": "5a8d8e81.c9b3a",
         "x": 510,
-        "y": 360,
+        "y": 440,
         "wires": []
     },
     {
@@ -665,8 +687,8 @@
         "repeat": "",
         "crontab": "",
         "once": false,
-        "x": 130,
-        "y": 220,
+        "x": 110,
+        "y": 60,
         "wires": [
             [
                 "fcd8aecc.ef51"
@@ -681,8 +703,8 @@
         "active": true,
         "console": "false",
         "complete": "false",
-        "x": 510,
-        "y": 220,
+        "x": 490,
+        "y": 60,
         "wires": []
     },
     {
@@ -709,8 +731,8 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 450,
-        "y": 100,
+        "x": 910,
+        "y": 240,
         "wires": []
     },
     {
@@ -721,11 +743,10 @@
         "func": "const moment = global.get('tzModule');\nlet now = moment().tz('Europe/Paris')\n\nlet alert = {\n    \"date\": now.toISOString(),\n    \"user\": \"12345\", \n    \"type\": \"harcelement\",\n    \"role\": \"witness\",\n    \"text\": \"\", \n    \"text_score\": 0,\n    \"attachment\" : \"\", \n    \"attachment_type\": \"\", \n    \"attachment_score\": 0,\n    \"tags\": []\n}\n\n// Comment userID is REQUIRED\nif (!msg.payload.user){ return msg; }\n\nalert.text = msg.payload.text;\nalert.user = msg.payload.user;\nalert.type = msg.payload.type; // FIXME: relies to the UI\nalert.role = \"witness\";        // FIXME: relies to the UI\n\n// FIXME: Handle attachments\n\n\nmsg.alert   = alert;\nmsg.payload = alert.text\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 330,
-        "y": 520,
+        "x": 290,
+        "y": 420,
         "wires": [
             [
-                "47575baa.144464",
                 "82033db2.c8d87"
             ]
         ]
@@ -739,8 +760,8 @@
         "method": "post",
         "upload": true,
         "swaggerDoc": "",
-        "x": 160,
-        "y": 520,
+        "x": 120,
+        "y": 420,
         "wires": [
             [
                 "4d05e4dc.80860c",
@@ -756,8 +777,8 @@
         "active": true,
         "console": "false",
         "complete": "false",
-        "x": 350,
-        "y": 480,
+        "x": 310,
+        "y": 380,
         "wires": []
     },
     {
@@ -767,7 +788,7 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 470,
+        "x": 770,
         "y": 520,
         "wires": []
     },
@@ -776,8 +797,8 @@
         "type": "subflow:6baaf188.a25a6",
         "z": "895a135a.82608",
         "name": "",
-        "x": 480,
-        "y": 560,
+        "x": 440,
+        "y": 460,
         "wires": [
             [
                 "32eb95a7.6491fa",
@@ -790,11 +811,11 @@
         "type": "function",
         "z": "895a135a.82608",
         "name": "Update",
-        "func": "let alert = msg.alerts\n\nalert.text_score = msg.results.score\nalert.tags.concat(msg.results.intents)\n\nreturn msg;",
+        "func": "let alert = msg.alert\n\nalert.text_score = msg.results.score\nalert.tags.concat(msg.results.intents)\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 640,
-        "y": 580,
+        "x": 600,
+        "y": 480,
         "wires": [
             [
                 "dd873095.9e245"
@@ -809,8 +830,8 @@
         "active": true,
         "console": "false",
         "complete": "results",
-        "x": 650,
-        "y": 540,
+        "x": 610,
+        "y": 440,
         "wires": []
     },
     {
@@ -831,10 +852,12 @@
         "merge": false,
         "server-mongodb": "90831821.61a9d8",
         "server-nedb": "",
-        "x": 800,
-        "y": 580,
+        "x": 760,
+        "y": 480,
         "wires": [
-            []
+            [
+                "47575baa.144464"
+            ]
         ]
     },
     {
@@ -855,8 +878,8 @@
         "merge": false,
         "server-mongodb": "90831821.61a9d8",
         "server-nedb": "",
-        "x": 350,
-        "y": 660,
+        "x": 310,
+        "y": 680,
         "wires": [
             [
                 "e70104ec.4e9d98"
@@ -874,8 +897,8 @@
         "repeat": "",
         "crontab": "",
         "once": false,
-        "x": 150,
-        "y": 660,
+        "x": 110,
+        "y": 680,
         "wires": [
             [
                 "41645e82.6c064"
@@ -890,8 +913,8 @@
         "active": true,
         "console": "false",
         "complete": "false",
-        "x": 530,
-        "y": 660,
+        "x": 490,
+        "y": 680,
         "wires": []
     },
     {
@@ -1108,6 +1131,101 @@
         "wires": [
             [
                 "ec1a1f1a.a18d1"
+            ]
+        ]
+    },
+    {
+        "id": "fd6758.6e2428a8",
+        "type": "http in",
+        "z": "895a135a.82608",
+        "name": "",
+        "url": "/mood",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 120,
+        "y": 220,
+        "wires": [
+            [
+                "7f98c098.eeac5"
+            ]
+        ]
+    },
+    {
+        "id": "f41e56b7.4957e8",
+        "type": "http in",
+        "z": "895a135a.82608",
+        "name": "",
+        "url": "/alert",
+        "method": "get",
+        "upload": true,
+        "swaggerDoc": "",
+        "x": 120,
+        "y": 460,
+        "wires": [
+            [
+                "4d05e4dc.80860c"
+            ]
+        ]
+    },
+    {
+        "id": "5834250d.1cc0bc",
+        "type": "function",
+        "z": "5a8d8e81.c9b3a",
+        "name": "Content",
+        "func": "\nlet mustache = global.get('mustacheModule');\nmsg.content.content = mustache.render(msg.payload, msg.test)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 540,
+        "y": 280,
+        "wires": [
+            [
+                "e515d3a5.15edb"
+            ]
+        ]
+    },
+    {
+        "id": "e515d3a5.15edb",
+        "type": "template",
+        "z": "5a8d8e81.c9b3a",
+        "name": "Script",
+        "field": "content.script",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "var colors = ['#17a2b8', '#f00f7c','#fcdb03','#a1db24','#f2a20d','#ff0000','#bf40bf'];\nvar color_blue = [\"#117888\", \"#16a0b6\", \"#1cc8e3\", \"#49d3e9\", \"#77deee\", \"#a4e9f4\", \"#d2f4f9\"];\nvar color_pink = [\"#90094a\", \"#c00c63\", \"#f00f7c\", \"#f33f96\", \"#f66fb0\", \"#f99fcb\", \"#fccfe5\"];\nvar color_yell = [\"#926507\", \"#c38809\", \"#f4aa0b\", \"#f6bb3c\", \"#f8cc6d\", \"#fadd9e\", \"#fceecf\"];\nvar color_gree = [\"#6e8415\", \"#93b01c\", \"#b7dd22\", \"#c6e34f\", \"#d4ea7b\", \"#e2f1a7\", \"#f1f8d3\"];\nChart.defaults.global.legend.display = false;\n\nvar ctx_c = $(\"#analytics-5 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'pie',\n    data: {\n        labels: [\"Colère\", \"Tristesse\", \"Peur\",  \"Joie\"],\n        datasets: [{\n            data: [17,12,24,48],\n            backgroundColor: color_blue,\n            borderColor: ['rgba(255, 255, 255, 1)'],\n            borderWidth: 2\n        }]\n    }\n});\n",
+        "output": "str",
+        "x": 530,
+        "y": 320,
+        "wires": [
+            [
+                "77cee08e.b57bc"
+            ]
+        ]
+    },
+    {
+        "id": "12927916.b3c807",
+        "type": "subflow:c7191305.b25f8",
+        "z": "895a135a.82608",
+        "x": 770,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d62141db.cc1ea",
+        "type": "function",
+        "z": "895a135a.82608",
+        "name": "",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 610,
+        "y": 300,
+        "wires": [
+            [
+                "12927916.b3c807"
             ]
         ]
     }
