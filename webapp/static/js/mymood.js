@@ -1,4 +1,29 @@
 $(window).load(function() {
+
+	var maxHeight = 0;
+	$('.pictures img').each(function() {
+		var height = $(this).height();
+		maxHeight = Math.max(maxHeight, parseInt(height));
+	});
+
+	$('.pictures .image').each(function() {
+
+		var $image = $(this).find('img'),
+			$container = $(this),
+			containerWidth = $container.width();
+
+		$(this).css({
+			'height': maxHeight+'px',
+			'width': containerWidth
+		});
+
+		$image.css({
+			width: containerWidth,
+			height: maxHeight
+		});
+
+	});
+
 	$('.alert-danger').hide();
 	$('.container.comment').hide();
 	$('.choose-image').click(function() {

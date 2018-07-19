@@ -1,14 +1,12 @@
 .pictures .image {
-	display:flex;
-	align-items: center;
-	background: black;
-	padding:1rem;
+	margin-top:1rem;
 }
 .pictures img {
-	width:100%;
-	height:auto;
-	max-height: 300px;
+	width: 100%;
+	height: auto;
+	object-fit:cover;
 	cursor: pointer;
+	border: 1px solid #dddddd;
 }
 .pictures img:hover {
 	border: 1px solid yellow;
