@@ -1,0 +1,23 @@
+html {
+	height:100%;
+}
+
+body {
+	background: rgba(0, 0, 0, 0.65);
+	height:100%;
+}
+
+.container {
+	height:100%;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.container form {
+	margin: 2rem 0;
+}
+
+.container form  button {
+	margin-top:1rem;
+}

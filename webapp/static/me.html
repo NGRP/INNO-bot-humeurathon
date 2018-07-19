@@ -31,6 +31,24 @@
     </div>
   </div>
 </div>
+
+{{{#mustMood}}}
+<div id="welcome" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3>Bonjour {{{username}}}</h3>
+        <p>Comment vas-tu aujourd’hui?</p>
+
+      </div>
+      <div class="modal-footer">
+        <a href="{{{serverUrl}}}/mymood" class="btn btn-primary">Dis-moi tout</a>
+      </div>
+    </div>
+  </div>
+</div>
+{{{/mustMood}}}
+
 <div id="confirm" class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
