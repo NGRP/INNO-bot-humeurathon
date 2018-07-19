@@ -12,6 +12,7 @@ $(window).load(function() {
 
 			$(input+'Span').html($(this).html());
 
+			$(input+'Span').addClass('selected');
 			$('.collapse').collapse('hide');
 		})
 	});
@@ -21,10 +22,12 @@ $(window).load(function() {
 			var date = new Date(datepicker.selectedYear, datepicker.selectedMonth, datepicker.selectedDay);
 			$("#dateInputSpan").html($.datepicker.formatDate( "d MM yy", date ));
 			$('#dateInputHidden').val(date.toISOString());
+			$("#dateInputSpan").addClass('selected');
 		}
 	});
 	$("#dateInputSpan").click(function() {
 		$('#dateInput').show().focus().hide();
+		$('.collapse').collapse('hide');
 	})
 
 
