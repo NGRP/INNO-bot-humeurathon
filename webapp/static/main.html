@@ -31,24 +31,7 @@
 
             </div>
             <div class="col" id="content">
-                <div class="row" id="menu">
-                    <div class="input-group" >
-                        <div class="input-group-prepend">
-                            <button class="btn btn-light {{#menu.semaine}}btn-active{{/menu.semaine}}" type="button" id="timeline-semaine">Semaine</button>
-                            <button class="btn btn-light {{#menu.mois}}btn-active{{/menu.mois}}" type="button" id="timeline-mois" >Mois</button>
-                            <button class="btn btn-light {{#menu.trimestre}}btn-active{{/menu.trimestre}}" type="button" id="timeline-trimestre">Trimes.</button>
-                            <button class="btn btn-light {{#menu.semestre}}btn-active{{/menu.semestre}}" type="button" id="timeline-semestre">Semes.</button>
-                            <button class="btn btn-light {{#menu.annee}}btn-active{{/menu.annee}}" type="button" id="timeline-annee">Année</button>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Rechercher..." style="border-radius: 0; background-color: #e9ecef">
-                        <div class="input-group-append" style="width:6%;">
-                            <button class="btn btn-light" id="search" type="button" style="width:100%; border-radius: 0;">
-                                <i class="fa fa-search" id="search_icon"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" id="data" style="padding:30px;">{{{content}}}</div>
+                {{{content}}}
             </div>
         </div>
     </div>
@@ -71,8 +54,20 @@
         $("#menu .btn-light").click(function() {
             //$("#menu .btn").removeClass("btn-active");
             //$(this).addClass("btn-active");
+            let tab = (window.location.href.match(/activites/)) ? 'activites' : 'alertes'
             let id = $(this).attr('id').replace('timeline-', '')
-            window.location.replace(BASEURL + 'activites?timeline=' + id);
+            window.location.replace(BASEURL + tab + '?timeline=' + id);
+        });
+
+
+        $(".open_alert").click(function() {
+            let id = $(this).parent().attr('id');
+            window.location.replace(BASEURL + 'alertes?alertid=' + id);
+        });
+
+        $(".open_user").click(function() {
+            let id = $(this).attr('id');
+            window.location.replace(BASEURL + 'alertes?userid=' + id);
         });
 
 
@@ -83,6 +78,11 @@
   </body>
 
   <style>
+
+    .open_user, .open_alert {
+        cursor: pointer;
+        font-weight: 700;
+    }
 
     .btn-light {
         border: 1px solid #ced4da;

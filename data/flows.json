@@ -21,6 +21,11 @@
         "info": ""
     },
     {
+        "id": "425c6870.1ff808",
+        "type": "tab",
+        "label": "Flow 1"
+    },
+    {
         "id": "6baaf188.a25a6",
         "type": "subflow",
         "name": "Analyse",
@@ -43,6 +48,16 @@
                 "wires": [
                     {
                         "id": "a9d97245.ac20c",
+                        "port": 1
+                    }
+                ]
+            },
+            {
+                "x": 980,
+                "y": 220,
+                "wires": [
+                    {
+                        "id": "b9e808ef.879ee8",
                         "port": 1
                     }
                 ]
@@ -114,19 +129,83 @@
         ],
         "out": [
             {
-                "x": 980,
-                "y": 160,
+                "x": 560,
+                "y": 300,
                 "wires": [
                     {
-                        "id": "ff2e0756.97ec78",
+                        "id": "5ad07487.005fcc",
                         "port": 0
                     }
                 ]
             },
             {
-                "x": 980,
+                "x": 480,
                 "y": 220,
-                "wires": []
+                "wires": [
+                    {
+                        "id": "4cb7d175.c9097",
+                        "port": 1
+                    },
+                    {
+                        "id": "66f73805.f96208",
+                        "port": 1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "35fe9e43.633212",
+        "type": "subflow",
+        "name": "Not Alert ?",
+        "info": "",
+        "in": [
+            {
+                "x": 120,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "3bb78dcb.f51282"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 700,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "3bb78dcb.f51282",
+                        "port": 0
+                    },
+                    {
+                        "id": "32ac7710.7edd58",
+                        "port": 0
+                    },
+                    {
+                        "id": "478140f4.eb367",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 520,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "63b442e1.4ce7fc",
+                        "port": 0
+                    },
+                    {
+                        "id": "63b442e1.4ce7fc",
+                        "port": 1
+                    },
+                    {
+                        "id": "478140f4.eb367",
+                        "port": 1
+                    }
+                ]
             }
         ]
     },
@@ -378,7 +457,6 @@
         "y": 200,
         "wires": [
             [
-                "d9bab7f4.5260c8",
                 "308bc6bd.9b320a"
             ]
         ]
@@ -388,14 +466,14 @@
         "type": "function",
         "z": "5a8d8e81.c9b3a",
         "name": "Content",
-        "func": "msg.params.timeline = msg.params.timeline || \"semaine\";\n\nmsg.content = {\n    menu : {\n        activites : true,\n        alertes :   false,\n        semaine:    (msg.params.timeline === 'semaine'),\n        mois:       (msg.params.timeline === 'mois'),\n        trimestre:  (msg.params.timeline === 'trimestre'),\n        semestre:   (msg.params.timeline === 'semestre'),\n        annee:      (msg.params.timeline === 'annee')\n    }\n};\n\nreturn msg;",
+        "func": "msg.params.timeline = msg.params.timeline || \"semaine\";\nmsg.content = {};\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 420,
         "y": 280,
         "wires": [
             [
-                "67c0d891.271958"
+                "6c5bc0c.d8b4c4"
             ]
         ]
     },
@@ -408,27 +486,11 @@
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 170,
-        "y": 560,
+        "x": 150,
+        "y": 520,
         "wires": [
             [
-                "4c3e2ca8.46a8b4"
-            ]
-        ]
-    },
-    {
-        "id": "4c3e2ca8.46a8b4",
-        "type": "function",
-        "z": "5a8d8e81.c9b3a",
-        "name": "Content",
-        "func": "msg.content = {\n    menu : {\n        activites : false,\n        alertes : true\n    },\n    content : \"coucou\"\n};\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 320,
-        "y": 560,
-        "wires": [
-            [
-                "77cee08e.b57bc"
+                "d24b9208.1f38b"
             ]
         ]
     },
@@ -436,8 +498,8 @@
         "id": "77cee08e.b57bc",
         "type": "subflow:f2f4cbd3.ad9a78",
         "z": "5a8d8e81.c9b3a",
-        "x": 870,
-        "y": 380,
+        "x": 570,
+        "y": 400,
         "wires": []
     },
     {
@@ -453,7 +515,8 @@
         "y": 280,
         "wires": [
             [
-                "5f1bae73.7dbe6"
+                "5f1bae73.7dbe6",
+                "bc197f5e.7af22"
             ]
         ]
     },
@@ -536,10 +599,10 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "var colors = [\"#f00f7c\", '#17a2b8', '#80d011', '#fcdb03'];\nvar color_blue = [\"#117888\", \"#16a0b6\", \"#1cc8e3\", \"#49d3e9\", \"#77deee\", \"#a4e9f4\", \"#d2f4f9\"];\nvar color_pink = [\"#90094a\", \"#c00c63\", \"#f00f7c\", \"#f33f96\", \"#f66fb0\", \"#f99fcb\", \"#fccfe5\"];\nvar color_yell = [\"#926507\", \"#c38809\", \"#f4aa0b\", \"#f6bb3c\", \"#f8cc6d\", \"#fadd9e\", \"#fceecf\"];\nvar color_gree = [\"#6e8415\", \"#93b01c\", \"#b7dd22\", \"#c6e34f\", \"#d4ea7b\", \"#e2f1a7\", \"#f1f8d3\"];\n\nChart.defaults.global.legend.display = false;\n\nvar ctx_c = $(\"#analytics-1 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'doughnut',\n    data: {\n        labels: [\"Ont participé\", \"N'ont pas participé\"],\n        datasets: [{\n            data: [{{data.voted}}, {{data.unvoted}}],\n            backgroundColor: color_blue,\n            borderColor: 'rgba(233, 236, 239, 1)',\n            borderWidth: 2\n        }]\n    }\n});\n\nctx_c = $(\"#analytics-2 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'bar',\n    data: {\n        labels: [\"1\", \"2\", \"3\", \"4+\"],\n        datasets: [{\n            data: [168, 48, 21, 12],\n            backgroundColor: color_blue,\n            borderColor: 'rgba(233, 236, 239, 1)',\n            borderWidth: 2\n        }]\n    }\n});\n\nctx_c = $(\"#analytics-3 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'line',\n    data: {\n        labels: [\"Lundi\", \"Mardi\", \"Mercredi\", \"Jeudi\", \"Vendredi\", \"Samedi\", \"Dimanche\"],\n        datasets: [{\n            data: [52, 81, 108, 6],\n            borderColor: \"#117888\",\n        }]\n    }\n});\n\nctx_c = $(\"#analytics-4 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'doughnut',\n    data: {\n        labels: [\"Colère\", \"Tristesse\", \"Peur\",  \"Joie\"],\n        datasets: [{\n            data: [17,12,24,48],\n            backgroundColor: colors,\n            borderColor: 'rgba(233, 236, 239, 1)',\n            borderWidth: 2\n        }]\n    }\n});\n\nctx_c = $(\"#analytics-5 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'bar',\n    data: {\n        labels: [\"Colère\", \"Tristesse\", \"Peur\",  \"Joie\"],\n        datasets: [{\n            data: [168, 48, 21, 4, 4, 2],\n            backgroundColor: colors,\n            borderColor: 'rgba(233, 236, 239, 1)',\n            borderWidth: 2\n        }]\n    }\n});\n\nctx_c = $(\"#analytics-6 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'line',\n    data: {\n        labels: [\"Lundi\", \"Mardi\", \"Mercredi\", \"Jeudi\", \"Vendredi\", \"Samedi\", \"Dimanche\"],\n        datasets: [{\n            label: \"Colère\",\n            data: [22,47,2,3],\n            borderColor: \"#f00f7c\"\n        },\n        {\n            label: \"Tristesse\",\n            data: [18, 24, 38, 56],\n            borderColor: \"#17a2b8\",\n        },\n        {\n            label: \"Peur\",\n            data: [22, 61, 88, 16],\n            borderColor: \"#80d011\",\n        },\n        {\n            label: \"Joie\",\n            data: [52, 81, 108, 6],\n            borderColor: \"#fcdb03\",\n        }]\n    },\n    options: {\n        legend: {\n            display: true\n        }\n    }\n});\n",
+        "template": "var colors = [\"#f00f7c\", '#17a2b8', '#80d011', '#fcdb03'];\nvar color_blue = [\"#117888\", \"#16a0b6\", \"#1cc8e3\", \"#49d3e9\", \"#77deee\", \"#a4e9f4\", \"#d2f4f9\"];\nvar color_pink = [\"#90094a\", \"#c00c63\", \"#f00f7c\", \"#f33f96\", \"#f66fb0\", \"#f99fcb\", \"#fccfe5\"];\nvar color_yell = [\"#926507\", \"#c38809\", \"#f4aa0b\", \"#f6bb3c\", \"#f8cc6d\", \"#fadd9e\", \"#fceecf\"];\nvar color_gree = [\"#6e8415\", \"#93b01c\", \"#b7dd22\", \"#c6e34f\", \"#d4ea7b\", \"#e2f1a7\", \"#f1f8d3\"];\n\nChart.defaults.global.legend.display = false;\n\nvar ctx_c = $(\"#analytics-1 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'doughnut',\n    data: {\n        labels: [\"Ont voté\", \"En attente\"],\n        datasets: [{\n            data: [{{data.voted}}, {{data.unvoted}}],\n            backgroundColor: color_blue,\n            borderColor: 'rgba(233, 236, 239, 1)',\n            borderWidth: 2\n        }]\n    }\n});\n\nctx_c = $(\"#analytics-2 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'bar',\n    data: {\n        labels: [\"1\", \"2\", \"3\", \"4+\"],\n        datasets: [{\n            data: [{{data.partParticipations}}],\n            backgroundColor: color_blue,\n            borderColor: 'rgba(233, 236, 239, 1)',\n            borderWidth: 2\n        }]\n    }\n});\n\nctx_c = $(\"#analytics-3 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'line',\n    data: {\n        labels: [{{{data.labelEvolution}}}],\n        datasets: [{\n            data: [{{data.partVoteEvolution}}],\n            borderColor: \"#117888\",\n        }]\n    }\n});\n\n\nctx_c = $(\"#analytics-4 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'doughnut',\n    data: {\n        labels: [\"Colère\", \"Tristesse\", \"Peur\",  \"Joie\"],\n        datasets: [{\n            data: [{{data.partHumeurs}}],\n            backgroundColor: colors,\n            borderColor: 'rgba(233, 236, 239, 1)',\n            borderWidth: 2\n        }]\n    }\n});\n\nctx_c = $(\"#analytics-5 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'bar',\n    data: {\n        labels: [\"Colère\", \"Tristesse\", \"Peur\",  \"Joie\"],\n        datasets: [{\n            data: [{{{data.partComments}}}],\n            backgroundColor: colors,\n            borderColor: 'rgba(233, 236, 239, 1)',\n            borderWidth: 2\n        }]\n    }\n});\n\nctx_c = $(\"#analytics-6 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'line',\n    data: {\n        labels: [{{{data.labelEvolution}}}],\n        datasets: {{{data.partHumeursEvolution}}}\n    },\n    options: {\n        legend: {\n            display: true\n        }\n    }\n});\n",
         "output": "str",
-        "x": 690,
-        "y": 340,
+        "x": 410,
+        "y": 400,
         "wires": [
             [
                 "77cee08e.b57bc"
@@ -558,21 +621,10 @@
         "y": 120,
         "wires": [
             [
-                "83198be3.848fe8"
+                "83198be3.848fe8",
+                "e7445f7e.eb745"
             ]
         ]
-    },
-    {
-        "id": "d9bab7f4.5260c8",
-        "type": "debug",
-        "z": "5a8d8e81.c9b3a",
-        "name": "",
-        "active": true,
-        "console": "false",
-        "complete": "true",
-        "x": 343,
-        "y": 191,
-        "wires": []
     },
     {
         "id": "308bc6bd.9b320a",
@@ -953,7 +1005,8 @@
         "wires": [
             [
                 "ef00d1f0.79c43"
-            ]
+            ],
+            []
         ]
     },
     {
@@ -994,66 +1047,9 @@
         "y": 180,
         "wires": [
             [
-                "d4380649.d51dc8"
+                "5ad07487.005fcc"
             ]
         ]
-    },
-    {
-        "id": "234ea427.d6c12c",
-        "type": "nosql",
-        "z": "3f945d0c.c8fc42",
-        "name": "",
-        "server-type": "mongodb",
-        "collection": "feedback",
-        "collectionType": "str",
-        "key": "{}",
-        "offset": "",
-        "offsetType": "num",
-        "limit": "",
-        "limitType": "num",
-        "value": "",
-        "operation": "find",
-        "merge": false,
-        "server-mongodb": "90831821.61a9d8",
-        "server-nedb": "",
-        "x": 320,
-        "y": 60,
-        "wires": [
-            [
-                "789ca6ca.7a2ac8"
-            ]
-        ]
-    },
-    {
-        "id": "fc308c2b.96c59",
-        "type": "inject",
-        "z": "3f945d0c.c8fc42",
-        "name": "List All",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "x": 150,
-        "y": 60,
-        "wires": [
-            [
-                "234ea427.d6c12c"
-            ]
-        ]
-    },
-    {
-        "id": "789ca6ca.7a2ac8",
-        "type": "debug",
-        "z": "3f945d0c.c8fc42",
-        "name": "",
-        "active": true,
-        "console": "false",
-        "complete": "false",
-        "x": 510,
-        "y": 60,
-        "wires": []
     },
     {
         "id": "348ea413.fd5d3c",
@@ -1065,7 +1061,7 @@
         "upload": false,
         "swaggerDoc": "",
         "x": 140,
-        "y": 140,
+        "y": 160,
         "wires": [
             [
                 "4cb7d175.c9097"
@@ -1076,15 +1072,16 @@
         "id": "d4380649.d51dc8",
         "type": "function",
         "z": "3f945d0c.c8fc42",
-        "name": "Create Alert ?",
-        "func": "\nif (msg.feedback.type !== 'mood'){\n    return [msg,undefined];\n}\n\n// FIXME: Compute Alert from Mood\n// Is it a bad mood ?\n// Compare to previous moods\n// What about comment content ?\nreturn [msg,undefined];\n\nlet alert = {\n    \"date\": now.toISOString(),\n    \"user\": msg.feedback.user, \n    \"type\": \"algorithm\",\n    \"role\": \"algorithm\",\n    \"mood\": 0,\n    \"text\": msg.feedback.text, \n    \"text_score\": msg.feedback.text_score,\n    \"state\": 0,\n    \"state_text\": \"\",\n    \"attachment\" : \"\", \n    \"attachment_type\": \"\", \n    \"attachment_score\": 0,\n    \"tags\": [].concat(msg.feedback.tags),\n    \"involve\": []\n}\n\nmsg.alert = alert;\nreturn [undefined, msg];",
-        "outputs": "2",
+        "name": "Alert",
+        "func": "\n// Build an alert from the feedback\nlet alert = {\n    \"date\": msg.feedback.date,\n    \"user\": msg.feedback.user, \n    \"type\": \"algorithm\", // harcelement\n    \"role\": \"algorithm\",\n    \"mood\": 0, // image Id\n    \"text\": msg.feedback.text, \n    \"text_score\": msg.feedback.text_score,\n    \"state\": 0,\n    \"state_text\": \"\",\n    \"attachment\" : \"\", \n    \"attachment_type\": \"\", \n    \"attachment_score\": 0,\n    \"tags\": [].concat(msg.feedback.tags),\n    \"involve\": [].concat(msg.feedback.involve),\n}\n\n\nmsg.alert = alert;\nreturn msg;",
+        "outputs": "1",
         "noerr": 0,
-        "x": 780,
-        "y": 220,
+        "x": 590,
+        "y": 360,
         "wires": [
-            [],
-            []
+            [
+                "72aa070f.82e398"
+            ]
         ]
     },
     {
@@ -1092,15 +1089,16 @@
         "type": "function",
         "z": "3f945d0c.c8fc42",
         "name": "Build",
-        "func": "const moment = global.get('tzModule');\nlet now = moment().tz('Europe/Paris')\n\nlet feedback = {\n    \"date\": now.toISOString(),\n    \"user\": \"12345\", \n    \"type\": \"\",\n    \"role\": \"\",\n    \"mood\": 0,\n    \"text\": \"\", \n    \"text_score\": 0,\n    \"state\": 0,\n    \"state_text\": \"\",\n    \"attachment\" : \"\", \n    \"attachment_type\": \"\", \n    \"attachment_score\": 0,\n    \"tags\": [],\n    \"involve\": []\n}\n\n// Comment userID is REQUIRED\nif (!msg.payload.user){ return msg; }\n\nfeedback.type = msg.payload.type || \"mood\"\nfeedback.text = msg.payload.text\nfeedback.user = msg.payload.user\nfeedback.role = msg.payload.role\n\n\nmsg.feedback = feedback\nmsg.payload  = feedback.text\nreturn msg;",
-        "outputs": 1,
+        "func": "const moment = global.get('tzModule');\nlet now = moment().tz('Europe/Paris')\n\nlet feedback = {\n    \"date\": now.toISOString(),\n    \"user\": \"12345\", \n    \"type\": \"\",\n    \"role\": \"\",\n    \"mood\": 0,\n    \"text\": \"\", \n    \"text_score\": 0,\n    \"state\": 0,\n    \"state_text\": \"\",\n    \"attachment\" : \"\", \n    \"attachment_type\": \"\", \n    \"attachment_score\": 0,\n    \"tags\": [],\n    \"involve\": []\n}\n\n// Comment userID is REQUIRED\nif (!msg.payload.user){ return [undefined, msg]; }\n\nfeedback.type = msg.payload.type || \"mood\"\nfeedback.text = msg.payload.text\nfeedback.user = msg.payload.user\nfeedback.role = msg.payload.role\nfeedback.date = msg.payload.date\n\nmsg.feedback = feedback\nmsg.payload  = feedback.text\nreturn [msg, undefined];",
+        "outputs": "2",
         "noerr": 0,
         "x": 290,
         "y": 180,
         "wires": [
             [
                 "66f73805.f96208"
-            ]
+            ],
+            []
         ]
     },
     {
@@ -1131,61 +1129,15 @@
         "wires": []
     },
     {
-        "id": "67c0d891.271958",
-        "type": "switch",
-        "z": "5a8d8e81.c9b3a",
-        "name": "Timeline",
-        "property": "params.timeline",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "else"
-            },
-            {
-                "t": "eq",
-                "v": "mois",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "trimestre",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "semestre",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "annee",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "outputs": 5,
-        "x": 400,
-        "y": 380,
-        "wires": [
-            [
-                "81bef677.18e3e8"
-            ],
-            [],
-            [],
-            [],
-            []
-        ]
-    },
-    {
         "id": "81bef677.18e3e8",
         "type": "function",
         "z": "5a8d8e81.c9b3a",
-        "name": "",
-        "func": "let humeurs = {\n    \"colère\": '<path fill=\"#989A9C\" d=\"M36.169,54.209c-4.813,0-4.813-7.463,0-7.463S40.982,54.209,36.169,54.209z M63.847,46.746  c-4.813,0-4.813,7.463,0,7.463C68.66,54.209,68.66,46.746,63.847,46.746z M94.004,50c-0.489,23.571-19.669,44.504-43.999,43.999  C26.433,93.51,5.5,74.33,6.005,50C6.495,26.429,25.674,5.496,50.004,6.001C74.336,6.506,93.499,25.669,94.004,50z M87.718,50  c-0.42-20.228-16.833-38.147-37.714-37.714C29.776,12.706,11.858,29.119,12.291,50c0.42,20.229,16.833,38.147,37.714,37.714  C70.885,87.28,87.285,70.88,87.718,50z M39.34,69.331c-3.021,2.714,1.439,7.144,4.445,4.445c3.717-3.339,8.655-3.449,12.44-0.15  c3.041,2.65,7.506-1.777,4.445-4.445C54.217,63.559,45.717,63.603,39.34,69.331z M39.036,46.424c2.289,3.309,7.74,0.171,5.427-3.172  c-3.781-5.467-10.184-7.952-16.675-6.354c-3.935,0.968-2.265,7.03,1.671,6.061C33.065,42.071,36.894,43.327,39.036,46.424z   M71.948,36.897c-6.491-1.597-12.894,0.887-16.675,6.354c-2.312,3.343,3.139,6.482,5.427,3.172c2.141-3.097,5.971-4.353,9.577-3.466  C74.213,43.927,75.882,37.865,71.948,36.897z\"/>',\n    \"tristesse\": '<path fill=\"#989A9C\" d=\"M36.169,51.209c-4.813,0-4.813-7.463,0-7.463S40.982,51.209,36.169,51.209z M63.847,43.746  c-4.813,0-4.813,7.463,0,7.463C68.66,51.209,68.66,43.746,63.847,43.746z M94.004,50c-0.489,23.571-19.669,44.504-43.999,43.999  C26.433,93.51,5.5,74.33,6.005,50C6.495,26.429,25.674,5.496,50.004,6.001C74.336,6.506,93.499,25.669,94.004,50z M87.718,50  c-0.42-20.228-16.833-38.147-37.714-37.714C29.776,12.706,11.858,29.119,12.291,50c0.42,20.229,16.833,38.147,37.714,37.714  C70.885,87.28,87.285,70.88,87.718,50z M37.549,72.223c-3.022,2.714,1.439,7.144,4.445,4.445c4.785-4.298,11.153-4.424,16.021-0.182  c3.041,2.65,7.506-1.777,4.445-4.445C54.92,65.472,44.998,65.532,37.549,72.223z M29.066,42.308  c1.084-5.176,5.016-8.656,10.22-9.393c1.699-0.241,2.605-2.376,2.195-3.866c-0.497-1.808-2.171-2.435-3.866-2.195  c-7.185,1.017-13.127,6.705-14.61,13.783C22.177,44.591,28.236,46.274,29.066,42.308z M62.085,26.854  c-1.695-0.24-3.369,0.387-3.866,2.195c-0.41,1.49,0.496,3.625,2.195,3.866c5.203,0.737,9.136,4.217,10.22,9.393  c0.831,3.966,6.889,2.284,6.061-1.671C75.212,33.559,69.27,27.871,62.085,26.854z M26.355,64.213  c-0.128-0.299-0.193-0.65-0.162-1.062c-0.03-0.414,0.037-0.766,0.167-1.067c0.67-3.381,3.161-6.477,5.238-9.086  c0.739-0.929,2.594-0.929,3.333,0c2.721,3.418,7.191,8.737,4.645,13.329C36.136,72.532,27.668,70.561,26.355,64.213z M34.815,61.155  c-0.457-0.814-1.041-1.745-1.626-2.616c-1.082,1.458-2.175,3.2-2.282,4.612c0.145,1.973,3.084,3.527,4.277,1.377  C35.891,63.252,35.481,62.343,34.815,61.155z\"/>',\n    \"peur\": '<path fill=\"#989A9C\" d=\"M36.17,51.209c-4.813,0-4.813-7.463,0-7.463C40.982,43.746,40.982,51.209,36.17,51.209z M63.847,43.746  c-4.813,0-4.813,7.463,0,7.463C68.66,51.209,68.66,43.746,63.847,43.746z M94.003,50c-0.489,23.571-19.668,44.503-43.998,43.998  C26.434,93.509,5.501,74.33,6.006,50C6.495,26.429,25.675,5.497,50.004,6.002C74.335,6.507,93.498,25.669,94.003,50z M87.717,50  c-0.42-20.228-16.833-38.146-37.713-37.713C29.776,12.707,11.858,29.12,12.292,50c0.42,20.228,16.833,38.146,37.713,37.713  C70.884,87.279,87.284,70.88,87.717,50z M38.04,69.605c-3.021,2.714,1.439,7.144,4.445,4.445c4.492-4.035,10.469-4.157,15.04-0.173  c3.041,2.65,7.506-1.777,4.445-4.444C54.727,63.122,45.195,63.178,38.04,69.605z M65.457,29.934  c-1.781-3.641-7.201-0.453-5.427,3.172c2.787,5.696,8.987,9.178,15.303,8.572c3.998-0.384,4.035-6.673,0-6.285  C71.019,35.807,67.363,33.829,65.457,29.934z M40.334,33.106c1.774-3.626-3.646-6.813-5.427-3.172  c-1.906,3.895-5.562,5.873-9.876,5.459c-4.035-0.387-3.998,5.902,0,6.285C31.348,42.285,37.547,38.802,40.334,33.106z\"/>',\n    \"joie\": '<path fill=\"#989A9C\" d=\"M36.061,43.699c4.849,0,4.849,7.52,0,7.52S31.211,43.699,36.061,43.699z M63.948,51.219  c4.849,0,4.849-7.52,0-7.52S59.099,51.219,63.948,51.219z M94.338,50C93.845,73.75,74.52,94.842,50.005,94.333  C26.254,93.84,5.162,74.515,5.671,50C6.164,26.25,25.489,5.158,50.005,5.667C74.52,6.176,93.829,25.484,94.338,50z M88.004,50  c-0.423-20.382-16.961-38.437-38-38c-20.382,0.423-38.437,16.961-38,38c0.423,20.382,16.961,38.437,38,38  C71.044,87.563,87.568,71.039,88.004,50z M62.828,64.763c-7.78,6.779-17.992,6.609-25.648-0.268  c-3.029-2.72-7.523,1.744-4.478,4.478c10.352,9.298,24.121,9.403,34.605,0.268C70.392,66.554,65.893,62.093,62.828,64.763z\"/>'\n}\n\nlet totalUsers = 267;\nlet votedUsers = 211;\n\n\n\nlet mustache = global.get('mustacheModule');\nmsg.content.content = mustache.render(msg.payload, { \n    votants: Math.round((votedUsers/totalUsers)*100),\n    humeur_path: humeurs['joie']\n})\n\nmsg.data = {\n    voted: votedUsers,\n    unvoted: totalUsers - votedUsers,\n}\n\nreturn msg;",
+        "name": "Data",
+        "func": "let humeurs = {\n    \"colère\": '<path fill=\"#989A9C\" d=\"M36.169,54.209c-4.813,0-4.813-7.463,0-7.463S40.982,54.209,36.169,54.209z M63.847,46.746  c-4.813,0-4.813,7.463,0,7.463C68.66,54.209,68.66,46.746,63.847,46.746z M94.004,50c-0.489,23.571-19.669,44.504-43.999,43.999  C26.433,93.51,5.5,74.33,6.005,50C6.495,26.429,25.674,5.496,50.004,6.001C74.336,6.506,93.499,25.669,94.004,50z M87.718,50  c-0.42-20.228-16.833-38.147-37.714-37.714C29.776,12.706,11.858,29.119,12.291,50c0.42,20.229,16.833,38.147,37.714,37.714  C70.885,87.28,87.285,70.88,87.718,50z M39.34,69.331c-3.021,2.714,1.439,7.144,4.445,4.445c3.717-3.339,8.655-3.449,12.44-0.15  c3.041,2.65,7.506-1.777,4.445-4.445C54.217,63.559,45.717,63.603,39.34,69.331z M39.036,46.424c2.289,3.309,7.74,0.171,5.427-3.172  c-3.781-5.467-10.184-7.952-16.675-6.354c-3.935,0.968-2.265,7.03,1.671,6.061C33.065,42.071,36.894,43.327,39.036,46.424z   M71.948,36.897c-6.491-1.597-12.894,0.887-16.675,6.354c-2.312,3.343,3.139,6.482,5.427,3.172c2.141-3.097,5.971-4.353,9.577-3.466  C74.213,43.927,75.882,37.865,71.948,36.897z\"/>',\n    \"tristesse\": '<path fill=\"#989A9C\" d=\"M36.169,51.209c-4.813,0-4.813-7.463,0-7.463S40.982,51.209,36.169,51.209z M63.847,43.746  c-4.813,0-4.813,7.463,0,7.463C68.66,51.209,68.66,43.746,63.847,43.746z M94.004,50c-0.489,23.571-19.669,44.504-43.999,43.999  C26.433,93.51,5.5,74.33,6.005,50C6.495,26.429,25.674,5.496,50.004,6.001C74.336,6.506,93.499,25.669,94.004,50z M87.718,50  c-0.42-20.228-16.833-38.147-37.714-37.714C29.776,12.706,11.858,29.119,12.291,50c0.42,20.229,16.833,38.147,37.714,37.714  C70.885,87.28,87.285,70.88,87.718,50z M37.549,72.223c-3.022,2.714,1.439,7.144,4.445,4.445c4.785-4.298,11.153-4.424,16.021-0.182  c3.041,2.65,7.506-1.777,4.445-4.445C54.92,65.472,44.998,65.532,37.549,72.223z M29.066,42.308  c1.084-5.176,5.016-8.656,10.22-9.393c1.699-0.241,2.605-2.376,2.195-3.866c-0.497-1.808-2.171-2.435-3.866-2.195  c-7.185,1.017-13.127,6.705-14.61,13.783C22.177,44.591,28.236,46.274,29.066,42.308z M62.085,26.854  c-1.695-0.24-3.369,0.387-3.866,2.195c-0.41,1.49,0.496,3.625,2.195,3.866c5.203,0.737,9.136,4.217,10.22,9.393  c0.831,3.966,6.889,2.284,6.061-1.671C75.212,33.559,69.27,27.871,62.085,26.854z M26.355,64.213  c-0.128-0.299-0.193-0.65-0.162-1.062c-0.03-0.414,0.037-0.766,0.167-1.067c0.67-3.381,3.161-6.477,5.238-9.086  c0.739-0.929,2.594-0.929,3.333,0c2.721,3.418,7.191,8.737,4.645,13.329C36.136,72.532,27.668,70.561,26.355,64.213z M34.815,61.155  c-0.457-0.814-1.041-1.745-1.626-2.616c-1.082,1.458-2.175,3.2-2.282,4.612c0.145,1.973,3.084,3.527,4.277,1.377  C35.891,63.252,35.481,62.343,34.815,61.155z\"/>',\n    \"peur\": '<path fill=\"#989A9C\" d=\"M36.17,51.209c-4.813,0-4.813-7.463,0-7.463C40.982,43.746,40.982,51.209,36.17,51.209z M63.847,43.746  c-4.813,0-4.813,7.463,0,7.463C68.66,51.209,68.66,43.746,63.847,43.746z M94.003,50c-0.489,23.571-19.668,44.503-43.998,43.998  C26.434,93.509,5.501,74.33,6.006,50C6.495,26.429,25.675,5.497,50.004,6.002C74.335,6.507,93.498,25.669,94.003,50z M87.717,50  c-0.42-20.228-16.833-38.146-37.713-37.713C29.776,12.707,11.858,29.12,12.292,50c0.42,20.228,16.833,38.146,37.713,37.713  C70.884,87.279,87.284,70.88,87.717,50z M38.04,69.605c-3.021,2.714,1.439,7.144,4.445,4.445c4.492-4.035,10.469-4.157,15.04-0.173  c3.041,2.65,7.506-1.777,4.445-4.444C54.727,63.122,45.195,63.178,38.04,69.605z M65.457,29.934  c-1.781-3.641-7.201-0.453-5.427,3.172c2.787,5.696,8.987,9.178,15.303,8.572c3.998-0.384,4.035-6.673,0-6.285  C71.019,35.807,67.363,33.829,65.457,29.934z M40.334,33.106c1.774-3.626-3.646-6.813-5.427-3.172  c-1.906,3.895-5.562,5.873-9.876,5.459c-4.035-0.387-3.998,5.902,0,6.285C31.348,42.285,37.547,38.802,40.334,33.106z\"/>',\n    \"joie\": '<path fill=\"#989A9C\" d=\"M36.061,43.699c4.849,0,4.849,7.52,0,7.52S31.211,43.699,36.061,43.699z M63.948,51.219  c4.849,0,4.849-7.52,0-7.52S59.099,51.219,63.948,51.219z M94.338,50C93.845,73.75,74.52,94.842,50.005,94.333  C26.254,93.84,5.162,74.515,5.671,50C6.164,26.25,25.489,5.158,50.005,5.667C74.52,6.176,93.829,25.484,94.338,50z M88.004,50  c-0.423-20.382-16.961-38.437-38-38c-20.382,0.423-38.437,16.961-38,38c0.423,20.382,16.961,38.437,38,38  C71.044,87.563,87.568,71.039,88.004,50z M62.828,64.763c-7.78,6.779-17.992,6.609-25.648-0.268  c-3.029-2.72-7.523,1.744-4.478,4.478c10.352,9.298,24.121,9.403,34.605,0.268C70.392,66.554,65.893,62.093,62.828,64.763z\"/>'\n}\n\nlet totalUsers = 267;\nlet votedUsers = 211;\nlet totalParticipations = 311;\nlet totalComments = 75;\nlet partParticipations = [197, 36, 4, 5];\nlet labelEvolution = [\"'Lundi'\", \"'Mardi'\", \"'Mercredi'\", \"'Jeudi'\", \"'Vendredi'\", \"'Samedi'\", \"'Dimanche'\"];\nlet partVoteEvolution = [61, 89, 52, 45, 64];\nlet partComments = [15, 18, 8, 34]\nlet partHumeurs = [37, 14, 24, 126];\nlet partHumeursEvolution = JSON.stringify([{\n    label: \"Colère\",\n    data: [13, 12, 14, 10, 10],\n    borderColor: \"#f00f7c\"\n},\n{\n    label: \"Tristesse\",\n    data: [15, 17, 16, 11, 14],\n    borderColor: \"#17a2b8\",\n},\n{\n    label: \"Peur\",\n    data: [6, 8, 5, 6, 5],\n    borderColor: \"#80d011\",\n},\n{\n    label: \"Joie\",\n    data: [27, 52, 17, 18, 35],\n    borderColor: \"#fcdb03\",\n}]);\n\n\nlet mustache = global.get('mustacheModule');\nmsg.content.menu = {activites : true}\nmsg.content.content = mustache.render(msg.payload, {\n    participations: totalParticipations,\n    users: votedUsers,\n    votants: Math.round((votedUsers/totalUsers)*100),\n    comments: totalComments,\n    humeur_path: humeurs['joie'],\n    menu : {\n        semaine:    (msg.params.timeline === 'semaine'),\n        mois:       (msg.params.timeline === 'mois'),\n        trimestre:  (msg.params.timeline === 'trimestre'),\n        semestre:   (msg.params.timeline === 'semestre'),\n        annee:      (msg.params.timeline === 'annee')\n    }\n})\n\nmsg.data = {\n    voted: votedUsers,\n    unvoted: totalUsers - votedUsers,\n    partParticipations: partParticipations,\n    labelEvolution : labelEvolution,\n    partVoteEvolution : partVoteEvolution,\n    partHumeurs : partHumeurs,\n    partComments: partComments,\n    partHumeursEvolution :partHumeursEvolution\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 550,
-        "y": 340,
+        "x": 410,
+        "y": 360,
         "wires": [
             [
                 "e515d3a5.15edb"
@@ -1258,7 +1210,7 @@
         "type": "function",
         "z": "988517b8.810bd8",
         "name": "content",
-        "func": "let serverUrl = global.get('CONFIG').server.host;\n\nmsg.content = {\n    customContent: msg.payload,\n    customCss: '<link href=\"'+serverUrl+'/static/css/alert.css\" rel=\"stylesheet\">',\n    customJs: '<script type=\"text/javascript\" src=\"'+serverUrl+'/static/js/alert.js\"></script>'\n}\nmsg.page = \"main\"\nreturn msg;",
+        "func": "let serverUrl = global.get('CONFIG').server.host;\n\nmsg.content = {\n    customContent: msg.payload,\n    customCss: '<link rel=\"stylesheet\" href=\"//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css\">\\\n    <link href=\"'+serverUrl+'/static/css/alert.css\" rel=\"stylesheet\">',\n    customJs: '<script src=\"'+serverUrl+'/static/js/lib/jquery.ui.datepicker-fr.js\"></script> \\\n    <script src=\"https://code.jquery.com/ui/1.12.1/jquery-ui.js\"></script> \\\n    <script type=\"text/javascript\" src=\"'+serverUrl+'/static/js/alert.js\"></script>'\n}\nmsg.page = \"main\"\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 919.2857666015625,
@@ -1281,5 +1233,1297 @@
                 "db5a7cd2.0bbc2"
             ]
         ]
+    },
+    {
+        "id": "72aa070f.82e398",
+        "type": "nosql",
+        "z": "3f945d0c.c8fc42",
+        "name": "",
+        "server-type": "mongodb",
+        "collection": "feedback",
+        "collectionType": "str",
+        "key": "",
+        "offset": "",
+        "offsetType": "num",
+        "limit": "",
+        "limitType": "num",
+        "value": "alert",
+        "operation": "add",
+        "merge": false,
+        "server-mongodb": "90831821.61a9d8",
+        "server-nedb": "",
+        "x": 780,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b1975f99.b58d4",
+        "type": "subflow:f2f4cbd3.ad9a78",
+        "z": "5a8d8e81.c9b3a",
+        "x": 670,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "2d0ede2f.1ce892",
+        "type": "nosql",
+        "z": "5a8d8e81.c9b3a",
+        "name": "",
+        "server-type": "mongodb",
+        "collection": "feedback",
+        "collectionType": "str",
+        "key": "{}",
+        "offset": "",
+        "offsetType": "num",
+        "limit": "",
+        "limitType": "num",
+        "value": "",
+        "operation": "find",
+        "merge": false,
+        "server-mongodb": "90831821.61a9d8",
+        "server-nedb": "",
+        "x": 320,
+        "y": 60,
+        "wires": [
+            [
+                "af289432.73a848"
+            ]
+        ]
+    },
+    {
+        "id": "314e870.d94367a",
+        "type": "inject",
+        "z": "5a8d8e81.c9b3a",
+        "name": "List All",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 150,
+        "y": 60,
+        "wires": [
+            [
+                "2d0ede2f.1ce892"
+            ]
+        ]
+    },
+    {
+        "id": "af289432.73a848",
+        "type": "debug",
+        "z": "5a8d8e81.c9b3a",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 510,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "5ad07487.005fcc",
+        "type": "subflow:35fe9e43.633212",
+        "z": "3f945d0c.c8fc42",
+        "name": "",
+        "x": 440,
+        "y": 320,
+        "wires": [
+            [],
+            [
+                "d4380649.d51dc8"
+            ]
+        ]
+    },
+    {
+        "id": "3bb78dcb.f51282",
+        "type": "switch",
+        "z": "35fe9e43.633212",
+        "name": "Is not a Mood ?",
+        "property": "feedback.type",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "mood",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "outputs": 2,
+        "x": 280,
+        "y": 60,
+        "wires": [
+            [],
+            [
+                "63b442e1.4ce7fc"
+            ]
+        ]
+    },
+    {
+        "id": "63b442e1.4ce7fc",
+        "type": "switch",
+        "z": "35fe9e43.633212",
+        "name": "Warning Tags",
+        "property": "feedback.tags",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "suicide",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "vol",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "outputs": 3,
+        "x": 280,
+        "y": 120,
+        "wires": [
+            [],
+            [],
+            [
+                "23f2ca17.c5dfa6"
+            ]
+        ]
+    },
+    {
+        "id": "54ba76b2.b4aea8",
+        "type": "function",
+        "z": "35fe9e43.633212",
+        "name": "Find Mood Score",
+        "func": "let mood_score = 0\nfor (let pic of msg.pictures){\n    if (pic.id !== msg.feedback.mood) continue;\n    mood_score = pic.score\n    break;\n}\nmsg.payload = mood_score\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 270,
+        "y": 240,
+        "wires": [
+            [
+                "32ac7710.7edd58"
+            ]
+        ]
+    },
+    {
+        "id": "23f2ca17.c5dfa6",
+        "type": "google-spreadsheet",
+        "z": "35fe9e43.633212",
+        "name": "",
+        "auth": "1b98bf04.b1d071",
+        "sheet": "1tJFncmR66AS55qmLiSWH1OvpGTirCiNDvO1_vQ4LDe4",
+        "range": "pictures",
+        "method": "append",
+        "direction": "column",
+        "action": "get",
+        "clear": false,
+        "line": true,
+        "column": false,
+        "fields": "all",
+        "save": "_sheet",
+        "selfields": [
+            ""
+        ],
+        "cell_l": "",
+        "cell_c": "",
+        "input": "",
+        "output": "pictures",
+        "saveType": "global",
+        "inputType": "msg",
+        "outputType": "msg",
+        "sheetType": "str",
+        "rangeType": "str",
+        "cell_lType": "str",
+        "cell_cType": "str",
+        "x": 260,
+        "y": 200,
+        "wires": [
+            [
+                "54ba76b2.b4aea8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "32ac7710.7edd58",
+        "type": "switch",
+        "z": "35fe9e43.633212",
+        "name": "Good Mood ?",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 280,
+        "y": 280,
+        "wires": [
+            [],
+            [
+                "339dd341.43fd8c"
+            ]
+        ]
+    },
+    {
+        "id": "4252ca6c.460314",
+        "type": "nosql",
+        "z": "35fe9e43.633212",
+        "name": "",
+        "server-type": "mongodb",
+        "collection": "feedback",
+        "collectionType": "str",
+        "key": "query",
+        "offset": "",
+        "offsetType": "num",
+        "limit": "",
+        "limitType": "num",
+        "value": "",
+        "operation": "find",
+        "merge": false,
+        "server-mongodb": "90831821.61a9d8",
+        "server-nedb": "",
+        "x": 280,
+        "y": 400,
+        "wires": [
+            [
+                "c9c6562a.4744c8"
+            ]
+        ]
+    },
+    {
+        "id": "339dd341.43fd8c",
+        "type": "function",
+        "z": "35fe9e43.633212",
+        "name": "Find previous moods (kludge)",
+        "func": "msg.query =  {\n    type: \"mood\",\n    user: msg.feedback.user\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 230,
+        "y": 360,
+        "wires": [
+            [
+                "4252ca6c.460314"
+            ]
+        ]
+    },
+    {
+        "id": "6c5bc0c.d8b4c4",
+        "type": "google-spreadsheet",
+        "z": "5a8d8e81.c9b3a",
+        "name": "",
+        "auth": "1b98bf04.b1d071",
+        "sheet": "1tJFncmR66AS55qmLiSWH1OvpGTirCiNDvO1_vQ4LDe4",
+        "range": "data_semaine",
+        "method": "append",
+        "direction": "column",
+        "action": "get",
+        "clear": false,
+        "line": true,
+        "column": false,
+        "fields": "all",
+        "save": "_sheet2",
+        "selfields": [
+            ""
+        ],
+        "cell_l": "",
+        "cell_c": "",
+        "input": "",
+        "output": "results",
+        "saveType": "global",
+        "inputType": "msg",
+        "outputType": "msg",
+        "sheetType": "str",
+        "rangeType": "str",
+        "cell_lType": "str",
+        "cell_cType": "str",
+        "x": 460,
+        "y": 320,
+        "wires": [
+            [
+                "81bef677.18e3e8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "42b391bd.c3912",
+        "type": "inject",
+        "z": "5a8d8e81.c9b3a",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 626,
+        "y": 198,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d24b9208.1f38b",
+        "type": "change",
+        "z": "5a8d8e81.c9b3a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "params",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 320,
+        "y": 520,
+        "wires": [
+            [
+                "37bd5f97.a711c"
+            ]
+        ]
+    },
+    {
+        "id": "e41ab6b6.156448",
+        "type": "nosql",
+        "z": "425c6870.1ff808",
+        "name": "",
+        "server-type": "mongodb",
+        "collection": "feedback",
+        "collectionType": "str",
+        "key": "query",
+        "offset": "",
+        "offsetType": "num",
+        "limit": "",
+        "limitType": "num",
+        "value": "",
+        "operation": "find",
+        "merge": false,
+        "server-mongodb": "90831821.61a9d8",
+        "server-nedb": "",
+        "x": 360,
+        "y": 120,
+        "wires": [
+            [
+                "4613f73c.b34d38"
+            ]
+        ]
+    },
+    {
+        "id": "c1c4304e.82c47",
+        "type": "inject",
+        "z": "425c6870.1ff808",
+        "name": "List All",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 170,
+        "y": 80,
+        "wires": [
+            [
+                "9e289e17.e64b8"
+            ]
+        ]
+    },
+    {
+        "id": "4613f73c.b34d38",
+        "type": "debug",
+        "z": "425c6870.1ff808",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 590,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "9e289e17.e64b8",
+        "type": "function",
+        "z": "425c6870.1ff808",
+        "name": "Find alerts",
+        "func": "msg.query =  {\n    type: { $ne: \"mood\"}\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 350,
+        "y": 80,
+        "wires": [
+            [
+                "e41ab6b6.156448"
+            ]
+        ]
+    },
+    {
+        "id": "b1c9233.c059be",
+        "type": "nosql",
+        "z": "5a8d8e81.c9b3a",
+        "name": "",
+        "server-type": "mongodb",
+        "collection": "feedback",
+        "collectionType": "str",
+        "key": "query",
+        "offset": "",
+        "offsetType": "num",
+        "limit": "",
+        "limitType": "num",
+        "value": "alerts",
+        "operation": "find",
+        "merge": false,
+        "server-mongodb": "90831821.61a9d8",
+        "server-nedb": "",
+        "x": 540,
+        "y": 900,
+        "wires": [
+            [
+                "f2cd7764.cd5618"
+            ]
+        ]
+    },
+    {
+        "id": "15680d75.5eecd3",
+        "type": "function",
+        "z": "5a8d8e81.c9b3a",
+        "name": "Data",
+        "func": "for (let al of msg.alerts) {\n    al.user = findUser(al.user);\n    al.date = new Date(al.date).toLocaleDateString('fr-FR');\n    if (al.state === 0) {\n        al.status = \"Nouvelle\";\n        al.color = \"danger\"\n    }\n    else if (al.state === 1) {\n        al.status = \"En attente\";\n        al.color = \"warning\"\n    }\n    else if (al.state === 2) {\n        al.status = \"En traitement\";\n        al.color = \"info\"\n    }\n    else if (al.state === 3) {\n        al.status = \"Traitée\";\n        al.color = \"success\"\n    }\n}\nlet mustache = global.get('mustacheModule');\nmsg.content.menu = {alertes : true}\nmsg.content.content = mustache.render(msg.payload, {\n    alerts: msg.alerts\n})\n\nreturn msg; \n\nfunction findUser(id) {\n    for (let user of msg.users) {\n        if (user.id === id) return user;\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 510,
+        "y": 980,
+        "wires": [
+            [
+                "b1975f99.b58d4"
+            ]
+        ]
+    },
+    {
+        "id": "f2cd7764.cd5618",
+        "type": "nosql",
+        "z": "5a8d8e81.c9b3a",
+        "name": "",
+        "server-type": "mongodb",
+        "collection": "user",
+        "collectionType": "str",
+        "key": "{}",
+        "offset": "",
+        "offsetType": "num",
+        "limit": "",
+        "limitType": "num",
+        "value": "users",
+        "operation": "find",
+        "merge": false,
+        "server-mongodb": "90831821.61a9d8",
+        "server-nedb": "",
+        "x": 520,
+        "y": 940,
+        "wires": [
+            [
+                "15680d75.5eecd3",
+                "dae16fd8.425e9"
+            ]
+        ]
+    },
+    {
+        "id": "75088edc.9323a",
+        "type": "google-spreadsheet",
+        "z": "5a8d8e81.c9b3a",
+        "name": "",
+        "auth": "1b98bf04.b1d071",
+        "sheet": "1tJFncmR66AS55qmLiSWH1OvpGTirCiNDvO1_vQ4LDe4",
+        "range": "users",
+        "method": "append",
+        "direction": "line",
+        "action": "get",
+        "clear": false,
+        "line": true,
+        "column": false,
+        "fields": "all",
+        "save": "_sheet3",
+        "selfields": [
+            ""
+        ],
+        "cell_l": "",
+        "cell_c": "",
+        "input": "",
+        "output": "results",
+        "saveType": "global",
+        "inputType": "msg",
+        "outputType": "msg",
+        "sheetType": "str",
+        "rangeType": "str",
+        "cell_lType": "str",
+        "cell_cType": "str",
+        "x": 360,
+        "y": 1060,
+        "wires": [
+            [
+                "fbc14432.f58f38"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "a725c263.92745",
+        "type": "inject",
+        "z": "5a8d8e81.c9b3a",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 160,
+        "y": 1060,
+        "wires": [
+            [
+                "75088edc.9323a"
+            ]
+        ]
+    },
+    {
+        "id": "e6efb389.d393b",
+        "type": "debug",
+        "z": "5a8d8e81.c9b3a",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 690,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "fbc14432.f58f38",
+        "type": "function",
+        "z": "5a8d8e81.c9b3a",
+        "name": "",
+        "func": "let array = [];\n\nfor (let i=0; i<msg.results.id.length;i++) {\n    array.push({\n        id: msg.results.id[i],\n        nom: msg.results.nom[i],\n        prenom: msg.results.prenom[i],\n        classe: msg.results.classe[i]\n    })\n}\n\nmsg.array = array;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 550,
+        "y": 1060,
+        "wires": [
+            [
+                "653c9d9e.b2c7e4",
+                "e6efb389.d393b"
+            ]
+        ]
+    },
+    {
+        "id": "653c9d9e.b2c7e4",
+        "type": "loop-management",
+        "z": "5a8d8e81.c9b3a",
+        "name": "",
+        "scope": "msg",
+        "input": "array",
+        "inputType": "msg",
+        "output": "user",
+        "outputType": "msg",
+        "x": 690,
+        "y": 1060,
+        "wires": [
+            [
+                "63f84d80.4ef514"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "63f84d80.4ef514",
+        "type": "nosql",
+        "z": "5a8d8e81.c9b3a",
+        "name": "",
+        "server-type": "mongodb",
+        "collection": "user",
+        "collectionType": "str",
+        "key": "user.id",
+        "offset": "",
+        "offsetType": "num",
+        "limit": "",
+        "limitType": "num",
+        "value": "user",
+        "operation": "set",
+        "merge": false,
+        "server-mongodb": "90831821.61a9d8",
+        "server-nedb": "",
+        "x": 700,
+        "y": 1020,
+        "wires": [
+            [
+                "653c9d9e.b2c7e4"
+            ]
+        ]
+    },
+    {
+        "id": "dae16fd8.425e9",
+        "type": "debug",
+        "z": "5a8d8e81.c9b3a",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 690,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "94fd0b5f.159e08",
+        "type": "nosql",
+        "z": "5a8d8e81.c9b3a",
+        "name": "",
+        "server-type": "mongodb",
+        "collection": "feedback",
+        "collectionType": "str",
+        "key": "alert.date",
+        "offset": "",
+        "offsetType": "num",
+        "limit": "",
+        "limitType": "num",
+        "value": "alert",
+        "operation": "set",
+        "merge": false,
+        "server-mongodb": "90831821.61a9d8",
+        "server-nedb": "",
+        "x": 510,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8440725b.e617f",
+        "type": "inject",
+        "z": "5a8d8e81.c9b3a",
+        "name": "Set alert",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 160,
+        "y": 100,
+        "wires": [
+            [
+                "d2e5a634.7b4c78"
+            ]
+        ]
+    },
+    {
+        "id": "d2e5a634.7b4c78",
+        "type": "function",
+        "z": "5a8d8e81.c9b3a",
+        "name": "Prepare alert",
+        "func": "msg.alert = {\n    \"date\":\"2018-07-18T11:36:50.158Z\",\n    \"user\":\"2\",\n    \"type\":\"vol\", // harcelement, vol, racket, autre\n    \"role\":null,\n    \"mood\":0,\n    \"text\":\"je me suis fait voler mon goûter dans mon casier (num 157)\",\n    \"text_score\":0.47,\n    \"state\":0,\n    \"state_text\":\"\",\n    \"attachment\":\"\",\n    \"attachment_type\":\"\",\n    \"attachment_score\":0,\n    \"tags\":[],\n    \"involve\":[]\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 330,
+        "y": 100,
+        "wires": [
+            [
+                "94fd0b5f.159e08"
+            ]
+        ]
+    },
+    {
+        "id": "c9c6562a.4744c8",
+        "type": "function",
+        "z": "35fe9e43.633212",
+        "name": "Find Mood Score",
+        "func": "let cpt = 0;\nlet mood_score = 0;\nfor (let feedback of msg.payload){ // FIXME: filter on date\n     cpt++;\n    for (let pic of msg.pictures){\n        if (pic.id !== feedback.mood) continue;\n        mood_score += pic.score\n        break;\n    }\n}\n\nmsg.payload = mood_score / cpt;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 270,
+        "y": 440,
+        "wires": [
+            [
+                "478140f4.eb367"
+            ]
+        ]
+    },
+    {
+        "id": "478140f4.eb367",
+        "type": "switch",
+        "z": "35fe9e43.633212",
+        "name": "Good Mood ?",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "0.5",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 280,
+        "y": 480,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "bc197f5e.7af22",
+        "type": "debug",
+        "z": "5a8d8e81.c9b3a",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 430,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "f0c9d3dc.9bcd7",
+        "type": "inject",
+        "z": "1bbdcb59.0d8c55",
+        "name": "",
+        "topic": "",
+        "payload": "Get alertes",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 140,
+        "y": 140,
+        "wires": [
+            [
+                "a50e5fae.c227e"
+            ]
+        ]
+    },
+    {
+        "id": "a50e5fae.c227e",
+        "type": "google-spreadsheet",
+        "z": "1bbdcb59.0d8c55",
+        "name": "",
+        "auth": "1b98bf04.b1d071",
+        "sheet": "1tJFncmR66AS55qmLiSWH1OvpGTirCiNDvO1_vQ4LDe4",
+        "range": "alertes",
+        "method": "append",
+        "direction": "line",
+        "action": "get",
+        "clear": false,
+        "line": false,
+        "column": true,
+        "fields": "all",
+        "save": "_sheet_alerte",
+        "selfields": [
+            ""
+        ],
+        "cell_l": "",
+        "cell_c": "",
+        "input": "",
+        "output": "",
+        "saveType": "msg",
+        "inputType": "msg",
+        "outputType": "msg",
+        "sheetType": "str",
+        "rangeType": "str",
+        "cell_lType": "str",
+        "cell_cType": "str",
+        "x": 340,
+        "y": 140,
+        "wires": [
+            [
+                "73d6755a.388fbc",
+                "34e541be.73b58e"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "73d6755a.388fbc",
+        "type": "debug",
+        "z": "1bbdcb59.0d8c55",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 550,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "34e541be.73b58e",
+        "type": "loop-management",
+        "z": "1bbdcb59.0d8c55",
+        "name": "",
+        "scope": "msg",
+        "input": "payload",
+        "inputType": "msg",
+        "output": "payload",
+        "outputType": "msg",
+        "x": 530,
+        "y": 180,
+        "wires": [
+            [
+                "714c99cd.e7a818"
+            ],
+            [
+                "8063edba.927a1"
+            ]
+        ]
+    },
+    {
+        "id": "8063edba.927a1",
+        "type": "debug",
+        "z": "1bbdcb59.0d8c55",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 710,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "714c99cd.e7a818",
+        "type": "function",
+        "z": "1bbdcb59.0d8c55",
+        "name": "",
+        "func": "const moment = global.get('tzModule');\n\nlet now = moment(msg.payload.date, 'YYYY-MM-DD HH:mm');\nmsg.payload.date = now.toISOString();\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 690,
+        "y": 180,
+        "wires": [
+            [
+                "ba90639f.711e",
+                "d22b06b2.925118"
+            ]
+        ]
+    },
+    {
+        "id": "37bd5f97.a711c",
+        "type": "function",
+        "z": "5a8d8e81.c9b3a",
+        "name": "Params ?",
+        "func": "msg.content = {};\n\nif (!msg.params) {\n    return [undefined, undefined, msg];\n}\nif (msg.params.userid) {\n    msg.query =  {\n        \"id\" : msg.params.userid\n    }\n    return [msg, undefined, undefined];\n}\nif (msg.params.alertid) {\n    msg.query =  {\n        \"date\" : msg.params.alertid\n    }\n    return [undefined, msg, undefined];\n}\n\n\nreturn [undefined, undefined, msg];",
+        "outputs": "3",
+        "noerr": 0,
+        "x": 320,
+        "y": 700,
+        "wires": [
+            [
+                "9b37ba3a.f91318"
+            ],
+            [
+                "34ca691.b293396"
+            ],
+            [
+                "58a06a2a.716724"
+            ]
+        ]
+    },
+    {
+        "id": "34ca691.b293396",
+        "type": "nosql",
+        "z": "5a8d8e81.c9b3a",
+        "name": "Get alert",
+        "server-type": "mongodb",
+        "collection": "feedback",
+        "collectionType": "str",
+        "key": "query",
+        "offset": "",
+        "offsetType": "num",
+        "limit": "",
+        "limitType": "num",
+        "value": "alerts",
+        "operation": "find",
+        "merge": false,
+        "server-mongodb": "90831821.61a9d8",
+        "server-nedb": "",
+        "x": 520,
+        "y": 700,
+        "wires": [
+            [
+                "32c2b3ea.1016dc"
+            ]
+        ]
+    },
+    {
+        "id": "d22b06b2.925118",
+        "type": "subflow:3f945d0c.c8fc42",
+        "z": "1bbdcb59.0d8c55",
+        "name": "",
+        "x": 840,
+        "y": 180,
+        "wires": [
+            [
+                "b1b52d1b.99d63"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b1b52d1b.99d63",
+        "type": "debug",
+        "z": "1bbdcb59.0d8c55",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 830,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "da6f01d3.6b14",
+        "type": "function",
+        "z": "5a8d8e81.c9b3a",
+        "name": "Content",
+        "func": "msg.query =  {\n    type: { $ne: \"mood\"}\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 520,
+        "y": 860,
+        "wires": [
+            [
+                "b1c9233.c059be"
+            ]
+        ]
+    },
+    {
+        "id": "32c2b3ea.1016dc",
+        "type": "function",
+        "z": "5a8d8e81.c9b3a",
+        "name": "Alert ?",
+        "func": "if (!msg.alerts || msg.alerts.length === 0 ) return [undefined, msg];\nmsg.alert = msg.alerts[0];\nreturn [msg, undefined];",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 530,
+        "y": 740,
+        "wires": [
+            [
+                "177a63a7.8cbffc"
+            ],
+            [
+                "279271ad.9bbe6e"
+            ]
+        ]
+    },
+    {
+        "id": "9b37ba3a.f91318",
+        "type": "nosql",
+        "z": "5a8d8e81.c9b3a",
+        "name": "Get user",
+        "server-type": "mongodb",
+        "collection": "user",
+        "collectionType": "str",
+        "key": "query",
+        "offset": "",
+        "offsetType": "num",
+        "limit": "",
+        "limitType": "num",
+        "value": "users",
+        "operation": "find",
+        "merge": false,
+        "server-mongodb": "90831821.61a9d8",
+        "server-nedb": "",
+        "x": 520,
+        "y": 620,
+        "wires": [
+            [
+                "2e0cabe0.d762f4",
+                "6975eb39.417c94"
+            ]
+        ]
+    },
+    {
+        "id": "b1b363f0.0e702",
+        "type": "link in",
+        "z": "5a8d8e81.c9b3a",
+        "name": "alertes",
+        "links": [
+            "58a06a2a.716724",
+            "279271ad.9bbe6e",
+            "9594a177.c268b"
+        ],
+        "x": 155,
+        "y": 860,
+        "wires": [
+            [
+                "9734f916.4d5bf8"
+            ]
+        ]
+    },
+    {
+        "id": "2e0cabe0.d762f4",
+        "type": "function",
+        "z": "5a8d8e81.c9b3a",
+        "name": "User ?",
+        "func": "if (!msg.users || msg.users.length === 0 ) return [undefined, msg];\nmsg.user = msg.users[0];\nreturn [msg, undefined];",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 530,
+        "y": 660,
+        "wires": [
+            [
+                "4234a47.289695c"
+            ],
+            [
+                "9594a177.c268b"
+            ]
+        ]
+    },
+    {
+        "id": "a31f60b3.9210b",
+        "type": "subflow:f2f4cbd3.ad9a78",
+        "z": "5a8d8e81.c9b3a",
+        "x": 1130,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "931bf534.323698",
+        "type": "subflow:f2f4cbd3.ad9a78",
+        "z": "5a8d8e81.c9b3a",
+        "x": 1030,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "9734f916.4d5bf8",
+        "type": "file in",
+        "z": "5a8d8e81.c9b3a",
+        "name": "",
+        "filename": "webapp/static/alertes.html",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "x": 310,
+        "y": 860,
+        "wires": [
+            [
+                "da6f01d3.6b14"
+            ]
+        ]
+    },
+    {
+        "id": "58a06a2a.716724",
+        "type": "link out",
+        "z": "5a8d8e81.c9b3a",
+        "name": "alertes",
+        "links": [
+            "b1b363f0.0e702"
+        ],
+        "x": 395,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "279271ad.9bbe6e",
+        "type": "link out",
+        "z": "5a8d8e81.c9b3a",
+        "name": "alertes",
+        "links": [
+            "b1b363f0.0e702"
+        ],
+        "x": 655,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "9594a177.c268b",
+        "type": "link out",
+        "z": "5a8d8e81.c9b3a",
+        "name": "alertes",
+        "links": [
+            "b1b363f0.0e702"
+        ],
+        "x": 655,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "b9907225.1595b",
+        "type": "function",
+        "z": "5a8d8e81.c9b3a",
+        "name": "Data",
+        "func": "\nlet mustache = global.get('mustacheModule');\nmsg.content.menu = {alertes : true}\nmsg.content.content = mustache.render(msg.payload, {\n    user : msg.user,\n    alerts: msg.alerts\n})\n\nreturn msg; \n\nfunction findUser(id) {\n    for (let user of msg.users) {\n        if (user.id === id) return user;\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 970,
+        "y": 640,
+        "wires": [
+            [
+                "a31f60b3.9210b"
+            ]
+        ]
+    },
+    {
+        "id": "6975eb39.417c94",
+        "type": "debug",
+        "z": "5a8d8e81.c9b3a",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 830,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "177a63a7.8cbffc",
+        "type": "file in",
+        "z": "5a8d8e81.c9b3a",
+        "name": "",
+        "filename": "webapp/static/card_alert.html",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "x": 760,
+        "y": 720,
+        "wires": [
+            [
+                "931bf534.323698"
+            ]
+        ]
+    },
+    {
+        "id": "4234a47.289695c",
+        "type": "file in",
+        "z": "5a8d8e81.c9b3a",
+        "name": "",
+        "filename": "webapp/static/card_user.html",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "x": 760,
+        "y": 640,
+        "wires": [
+            [
+                "b9907225.1595b"
+            ]
+        ]
+    },
+    {
+        "id": "ba90639f.711e",
+        "type": "debug",
+        "z": "1bbdcb59.0d8c55",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 730,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "e7445f7e.eb745",
+        "type": "debug",
+        "z": "6baaf188.a25a6",
+        "name": "DEBUG",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 1000,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "d7781042.0c623",
+        "type": "http in",
+        "z": "988517b8.810bd8",
+        "name": "",
+        "url": "/alert",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 265.71429443359375,
+        "y": 888.5714721679688,
+        "wires": [
+            [
+                "e6c36b88.8ffca8"
+            ]
+        ]
+    },
+    {
+        "id": "e6c36b88.8ffca8",
+        "type": "function",
+        "z": "988517b8.810bd8",
+        "name": "prepareFeedback",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 523.7142944335938,
+        "y": 888.5714721679688,
+        "wires": [
+            [
+                "aa1a7ee3.c1f43"
+            ]
+        ]
+    },
+    {
+        "id": "fbff63ea.ac7a2",
+        "type": "http response",
+        "z": "988517b8.810bd8",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1145.7142944335938,
+        "y": 828.5714721679688,
+        "wires": []
+    },
+    {
+        "id": "aa1a7ee3.c1f43",
+        "type": "function",
+        "z": "988517b8.810bd8",
+        "name": "redirect",
+        "func": "msg.payload = {\n    redirect: global.get('CONFIG').server.host + '/me#confirmAlert'\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 967.7142944335938,
+        "y": 828.5714721679688,
+        "wires": [
+            [
+                "fbff63ea.ac7a2"
+            ]
+        ]
+    },
+    {
+        "id": "7825815d.a7d02",
+        "type": "http response",
+        "z": "988517b8.810bd8",
+        "name": "",
+        "statusCode": "400",
+        "headers": {},
+        "x": 974.2142944335938,
+        "y": 900.5714721679688,
+        "wires": []
     }
 ]

@@ -1,0 +1,40 @@
+<div class="row" id="menu">
+        <div class="input-group" >
+            <input type="text" class="form-control" placeholder="Rechercher..." style="border-radius: 0; background-color: #e9ecef">
+            <div class="input-group-append" style="width:6%;">
+                <button class="btn btn-light" id="search" type="button" style="width:100%; border-radius: 0;">
+                    <i class="fa fa-search" id="search_icon"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="data" style="padding:30px;">
+
+        <div class="col-11">  
+                
+            <table class="table" style="border: 1px solid #ced4da; text-align:center;">
+                <thead class="thead-light">
+                    <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Classe</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#alerts}}
+                    <tr id={{id}}>
+                    <th class="open_alert">{{date}}</th>
+                    <td class="open_user" id={{user.id}}>{{user.nom}} {{user.prenom}}</td>
+                    <td>{{user.classe}}</td>
+                    <td>{{type}}</td>
+                    <td><span class="alert alert-{{color}}" style="padding:8px; width: 100%">{{status}}</span></td>
+                    </tr>
+                    {{/alerts}}
+                </tbody>
+                </table>
+        </div>
+                    
+    </div>
+

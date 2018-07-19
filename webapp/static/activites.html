@@ -1,65 +1,86 @@
-
-
-<div class="col-3">
-    <div class="card" id="analytics-1">
-        <div style="position: relative;">
-            <div class="filltext"><b>{{votants}}</b>%</div>
-            <canvas width="300" height="300"></canvas>
-        </div>
-        <span>
-            <b>Votants</b>
-        </span>
-    </div>
-</div>
-
-<div class="col-3">
-    <div class="card" id="analytics-2">
-        <canvas width="300" height="300" ></canvas>
-        <span>
-            <b>{{participations}} participations</b>
-        </span>
-    </div>
-</div>
-
-<div class="col-6">
-    <div class="card" id="analytics-3">
-        <canvas width="600" height="279" ></canvas>
-        <span>
-            <b>Evolution des participations</b>
-        </span>
-    </div>
-</div>
-
-<div class="col-3">
-    <div class="card"  id="analytics-4">
-            <div style="position: relative;">
-                <div class="fillsvg">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 98" xml:space="preserve">
-                       {{{humeur_path}}}
-                    </svg>
-                </div>
-                <canvas width="300" height="300"></canvas>
+<div class="row" id="menu">
+        <div class="input-group" >
+            <div class="input-group-prepend">
+                <button class="btn btn-light {{#menu.semaine}}btn-active{{/menu.semaine}}" type="button" id="timeline-semaine">Semaine</button>
+                <button class="btn btn-light {{#menu.mois}}btn-active{{/menu.mois}}" type="button" id="timeline-mois" >Mois</button>
+                <button class="btn btn-light {{#menu.trimestre}}btn-active{{/menu.trimestre}}" type="button" id="timeline-trimestre">Trimes.</button>
+                <button class="btn btn-light {{#menu.semestre}}btn-active{{/menu.semestre}}" type="button" id="timeline-semestre">Semes.</button>
+                <button class="btn btn-light {{#menu.annee}}btn-active{{/menu.annee}}" type="button" id="timeline-annee">Année</button>
             </div>
-        <span>
-            <b>Humeurs</b>
-        </span>
-    </div>
-</div>
-
-<div class="col-3">
-        <div class="card" id="analytics-5">
-            <canvas width="300" height="300" ></canvas>
-            <span>
-                <b>Commentaires</b>
-            </span>
+            <input type="text" class="form-control" placeholder="Rechercher..." style="border-radius: 0; background-color: #e9ecef">
+            <div class="input-group-append" style="width:6%;">
+                <button class="btn btn-light" id="search" type="button" style="width:100%; border-radius: 0;">
+                    <i class="fa fa-search" id="search_icon"></i>
+                </button>
+            </div>
         </div>
-</div>
-
-<div class="col-6">
-    <div class="card"  id="analytics-6">
-        <canvas width="600" height="279" ></canvas>
-        <span>
-            <b>Evolution des humeurs</b>
-        </span>
     </div>
-</div>
+    <div class="row" id="data" style="padding:30px;">
+
+            <div class="col-3">
+                    <div class="card" id="analytics-1">
+                        <div style="position: relative;">
+                            <div class="filltext"><b>{{votants}}</b>%</div>
+                            <canvas width="300" height="300"></canvas>
+                        </div>
+                        <span>
+                            <b>{{users}} votants</b>
+                        </span>
+                    </div>
+                </div>
+
+            <div class="col-3">
+                <div class="card" id="analytics-2">
+                    <canvas width="300" height="300" ></canvas>
+                    <span>
+                        <b>{{participations}} participations</b>
+                    </span>
+                </div>
+            </div>
+            
+            <div class="col-6">
+                <div class="card" id="analytics-3">
+                    <canvas width="600" height="279" ></canvas>
+                    <span>
+                        <b>Evolution des participations</b>
+                    </span>
+                </div>
+            </div>
+            
+            <div class="col-3">
+                <div class="card"  id="analytics-4">
+                        <div style="position: relative;">
+                            <div class="fillsvg">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 98" xml:space="preserve">
+                                    {{{humeur_path}}}
+                                </svg>
+                            </div>
+                            <canvas width="300" height="300"></canvas>
+                        </div>
+                    <span>
+                        <b>Humeurs</b>
+                    </span>
+                </div>
+            </div>
+            
+            <div class="col-3">
+                    <div class="card" id="analytics-5">
+                        <canvas width="300" height="300" ></canvas>
+                        <span>
+                            <b>{{comments}} commentaires</b>
+                        </span>
+                    </div>
+            </div>
+            
+            <div class="col-6">
+                <div class="card"  id="analytics-6">
+                    <canvas width="600" height="279" ></canvas>
+                    <span>
+                        <b>Evolution des humeurs</b>
+                    </span>
+                </div>
+            </div>
+    </div>
+
+
+
