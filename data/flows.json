@@ -553,8 +553,8 @@
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 160,
-        "y": 240,
+        "x": 137.50002670288086,
+        "y": 160.00000381469727,
         "wires": [
             [
                 "7486a260.c33c7c"
@@ -569,8 +569,8 @@
         "func": "let mustache = global.get('mustacheModule');\n\nmsg.payload = mustache.render(msg.payload, {\n    \"serverUrl\": global.get('CONFIG').server.host,\n    \"pictures\" : msg.selectedPictures\n})\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1490,
-        "y": 240,
+        "x": 1467.5000267028809,
+        "y": 160.00000381469727,
         "wires": [
             [
                 "953daff6.5ac56"
@@ -586,8 +586,8 @@
         "format": "utf8",
         "chunk": false,
         "sendError": false,
-        "x": 1230,
-        "y": 240,
+        "x": 1207.5000267028809,
+        "y": 160.00000381469727,
         "wires": [
             [
                 "4270ae56.93645"
@@ -601,8 +601,8 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 1700,
-        "y": 240,
+        "x": 1677.5000267028809,
+        "y": 160.00000381469727,
         "wires": []
     },
     {
@@ -635,8 +635,8 @@
         "rangeType": "str",
         "cell_lType": "str",
         "cell_cType": "str",
-        "x": 510,
-        "y": 240,
+        "x": 487.50002670288086,
+        "y": 160.00000381469727,
         "wires": [
             [
                 "d1f4763a.7d2078"
@@ -652,8 +652,8 @@
         "func": "msg.selectedPictures = [];\n\nfor (let type of Object.keys(msg.pictures)) {\n    let pictures = msg.pictures[type];\n    let max = pictures.length;\n    \n    let index = Math.floor(Math.random() * Math.floor(max));\n    msg.selectedPictures.push(pictures[index]);\n    \n    \n}\n\nfunction shuffle(a) {\n    for (let i = a.length - 1; i > 0; i--) {\n        const j = Math.floor(Math.random() * (i + 1));\n        [a[i], a[j]] = [a[j], a[i]];\n    }\n    return a;\n}\n\nshuffle(msg.selectedPictures)\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 990,
-        "y": 240,
+        "x": 967.5000267028809,
+        "y": 160.00000381469727,
         "wires": [
             [
                 "2e9f0c77.b9e334"
@@ -668,8 +668,8 @@
         "func": "msg.pictures = {};\n\nfor(let picture of msg.payload) {\n    msg.pictures[picture.type] = msg.pictures[picture.type] || [];\n    msg.pictures[picture.type].push(picture);\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 800,
-        "y": 240,
+        "x": 777.5000267028809,
+        "y": 160.00000381469727,
         "wires": [
             [
                 "754f96b5.54d1a8"
@@ -996,8 +996,8 @@
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 130,
-        "y": 520,
+        "x": 132.50001525878906,
+        "y": 295.00000762939453,
         "wires": [
             [
                 "b62a7c18.47d52"
@@ -1012,8 +1012,8 @@
         "func": "let mustache = global.get('mustacheModule');\n\nmsg.payload = mustache.render(msg.payload, {\n    \"serverUrl\": global.get('CONFIG').server.host,\n    \"pictures\" : msg.selectedPictures\n})\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 640,
-        "y": 520,
+        "x": 642.5000152587891,
+        "y": 295.00000762939453,
         "wires": [
             [
                 "7f0e2fd9.aa064"
@@ -1029,8 +1029,8 @@
         "format": "utf8",
         "chunk": false,
         "sendError": false,
-        "x": 380,
-        "y": 520,
+        "x": 382.50001525878906,
+        "y": 295.00000762939453,
         "wires": [
             [
                 "b6896332.867ca"
@@ -1044,8 +1044,8 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 850,
-        "y": 520,
+        "x": 852.5000152587891,
+        "y": 295.00000762939453,
         "wires": []
     },
     {
@@ -1055,8 +1055,8 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 1230,
-        "y": 660,
+        "x": 1235.0000190734863,
+        "y": 422.50000953674316,
         "wires": []
     },
     {
@@ -1067,8 +1067,8 @@
         "func": "msg.payload = {\n    redirect: global.get('CONFIG').server.host + '/confirm'\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1000,
-        "y": 660,
+        "x": 1005.0000190734863,
+        "y": 422.50000953674316,
         "wires": [
             [
                 "967c3d9e.4d187"
@@ -1084,8 +1084,8 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 140,
-        "y": 660,
+        "x": 145.00001907348633,
+        "y": 422.50000953674316,
         "wires": [
             [
                 "cb7d719b.a05fe"
@@ -1110,8 +1110,8 @@
         "merge": false,
         "server-mongodb": "90831821.61a9d8",
         "server-nedb": "",
-        "x": 650,
-        "y": 660,
+        "x": 655.0000190734863,
+        "y": 422.50000953674316,
         "wires": [
             [
                 "94bea754.e100a8"
@@ -1126,8 +1126,8 @@
         "func": "const moment = global.get('tzModule');\nlet now = moment().tz('Europe/Paris');\n\nmsg.payload = {\n    date: now.toISOString(),\n    user: '123',\n    \"text\": msg.req.body.comment,\n    \"text_score\": 0,\n    \"picture\": msg.req.body.picture,\n    \"tags\": []\n};\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 384,
-        "y": 661,
+        "x": 389.0000190734863,
+        "y": 423.50000953674316,
         "wires": [
             [
                 "ec1a1f1a.a18d1"
@@ -1193,7 +1193,7 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "var colors = ['#17a2b8', '#f00f7c','#fcdb03','#a1db24','#f2a20d','#ff0000','#bf40bf'];\nvar color_blue = [\"#117888\", \"#16a0b6\", \"#1cc8e3\", \"#49d3e9\", \"#77deee\", \"#a4e9f4\", \"#d2f4f9\"];\nvar color_pink = [\"#90094a\", \"#c00c63\", \"#f00f7c\", \"#f33f96\", \"#f66fb0\", \"#f99fcb\", \"#fccfe5\"];\nvar color_yell = [\"#926507\", \"#c38809\", \"#f4aa0b\", \"#f6bb3c\", \"#f8cc6d\", \"#fadd9e\", \"#fceecf\"];\nvar color_gree = [\"#6e8415\", \"#93b01c\", \"#b7dd22\", \"#c6e34f\", \"#d4ea7b\", \"#e2f1a7\", \"#f1f8d3\"];\nChart.defaults.global.legend.display = false;\n\nvar ctx_c = $(\"#analytics-5 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'pie',\n    data: {\n        labels: [\"Colère\", \"Tristesse\", \"Peur\",  \"Joie\"],\n        datasets: [{\n            data: [17,12,24,48],\n            backgroundColor: color_blue,\n            borderColor: ['rgba(255, 255, 255, 1)'],\n            borderWidth: 2\n        }]\n    }\n});\n",
+        "template": "var colors = ['#17a2b8', '#f00f7c','#fcdb03','#a1db24','#f2a20d','#ff0000','#bf40bf'];\nvar color_blue = [\"#117888\", \"#16a0b6\", \"#1cc8e3\", \"#49d3e9\", \"#77deee\", \"#a4e9f4\", \"#d2f4f9\"];\nvar color_pink = [\"#90094a\", \"#c00c63\", \"#f00f7c\", \"#f33f96\", \"#f66fb0\", \"#f99fcb\", \"#fccfe5\"];\nvar color_yell = [\"#926507\", \"#c38809\", \"#f4aa0b\", \"#f6bb3c\", \"#f8cc6d\", \"#fadd9e\", \"#fceecf\"];\nvar color_gree = [\"#6e8415\", \"#93b01c\", \"#b7dd22\", \"#c6e34f\", \"#d4ea7b\", \"#e2f1a7\", \"#f1f8d3\"];\n\nChart.defaults.global.legend.display = false;\n\nvar ctx_c = $(\"#analytics-1 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'pie',\n    data: {\n        labels: [\"Ont participé\", \"N'ont pas participés\"],\n        datasets: [{\n            data: [247, 154],\n            backgroundColor: color_blue,\n            borderColor: ['#e9ecef'],\n            borderWidth: 2\n        }]\n    }\n});\n\nctx_c = $(\"#analytics-5 canvas\");\nvar msg_canals = new Chart(ctx_c, {\n    type: 'pie',\n    data: {\n        labels: [\"Colère\", \"Tristesse\", \"Peur\",  \"Joie\"],\n        datasets: [{\n            data: [17,12,24,48],\n            backgroundColor: color_blue,\n            borderColor: ['#e9ecef'],\n            borderWidth: 2\n        }]\n    }\n});\n",
         "output": "str",
         "x": 530,
         "y": 320,

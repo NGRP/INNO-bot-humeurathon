@@ -6,6 +6,8 @@ $(window).load(function() {
 		maxHeight = Math.max(maxHeight, parseInt(height));
 	});
 
+	maxHeight = Math.min(maxHeight, 200);
+
 	$('.pictures .image').each(function() {
 
 		var $image = $(this).find('img'),
