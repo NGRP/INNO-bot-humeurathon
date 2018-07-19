@@ -1,0 +1,47 @@
+
+
+<div class="container">
+	<div class="row">
+    <div class="col col-md-6 col-xs-12 col-sm-12">
+      <h3>Devoirs</h3>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><span>Français</span> <button class="btn btn-secondary btn-sm">Voir</button></li>
+        <li class="list-group-item"><span>Vie scolaire</span> <button class="btn btn-secondary btn-sm">Voir</button></li>
+        <li class="list-group-item"><span>Mathématiques</span> <button class="btn btn-secondary btn-sm">Voir</button></li>
+      </ul>
+    </div>
+    <div class="col col-md-6 col-xs-12 col-sm-12">
+      <h3>Notes</h3>  
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><span>Français</span><span class="score">10</span></li>
+        <li class="list-group-item"><span>Anglais</span><span class="score">12</span></li>
+        <li class="list-group-item"><span>Mathématiques</span><span class="score">11</span></li>
+        <li class="list-group-item"><a href="#">Voir tout</a></li>
+      </ul>
+    </div>   
+  </div>
+  <div class="row">
+    
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        
+        <p class="card-text">Harcèlement, racket, vol,… Tu as été témoin ou victime? Ne reste pas seul.</p>
+        <a href="#" class="btn btn-primary">Parlons-en</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="confirm" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <img src="/static/images/face.svg"/>
+        <p>MERCI !</p>
+      </div>
+      <div class="modal-footer">
+        <a href="{{{serverUrl}}}/alert" class="btn btn-secondary">Signaler un problème</a>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Retourner à l'accueil</button>
+      </div>
+    </div>
+  </div>
+</div>

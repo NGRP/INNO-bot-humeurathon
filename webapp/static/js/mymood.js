@@ -1,5 +1,8 @@
 $(window).load(function() {
 
+	$('.alert-danger').hide();
+	$('.container.comment').hide();
+	
 	var maxHeight = 0;
 	$('.pictures img').each(function() {
 		var height = $(this).height();
@@ -26,8 +29,6 @@ $(window).load(function() {
 
 	});
 
-	$('.alert-danger').hide();
-	$('.container.comment').hide();
 	$('.choose-image').click(function() {
 		$('#photoInput').val($(this).data('picture'));
 		$(".container.mood").hide();

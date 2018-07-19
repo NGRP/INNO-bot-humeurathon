@@ -9,5 +9,9 @@
 	border: 1px solid #dddddd;
 }
 .pictures img:hover {
-	border: 1px solid yellow;
+	border: 1px solid #007bff;
+}
+
+#commentForm button {
+	float:right;
 }

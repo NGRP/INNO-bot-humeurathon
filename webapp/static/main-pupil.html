@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+       <!-- Bootstrap CSS -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+
+      {{{pupilCss}}}
+
+      {{{customCss}}}
+     
+   </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Humeurathon</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link {{#mainActive}}active{{/mainActive}}" href="{{{serverUrl}}}/me">
+            <i class="fas fa-table"></i> Tableau de bord 
+            {{#mainActive}}<span class="sr-only">(current)</span>{{/mainActive}}
+          </a>
+          <a class="nav-item nav-link {{#bookActive}}active{{/bookActive}}" href="#">
+            <i class="fas fa-book-open"></i> Cahier de texte
+            {{#bookActive}}<span class="sr-only">(current)</span>{{/bookActive}}
+          </a>
+          <a class="nav-item nav-link {{#marksActive}}active{{/marksActive}}" href="#">
+            <i class="fas fa-signal"></i> Notes
+            {{#marksActive}}<span class="sr-only">(current)</span>{{/marksActive}}
+          </a>
+          <a class="nav-item nav-link {{#lifeActive}}active{{/lifeActive}}" href="{{{serverUrl}}}/mymood">
+            <i class="fas fa-briefcase"></i> Vie scolaire
+            {{#lifeActive}}<span class="sr-only">(current)</span>{{/lifeActive}}
+          </a>
+          <a class="nav-item nav-link {{#profileActive}}active{{/profileActive}}" href="#">
+            <i class="fas fa-user"></i> {{username}}
+            {{#profileActive}}<span class="sr-only">(current)</span>{{/profileActive}}
+          </a>
+        </div>
+      </div>
+    </nav>
+
+  	{{{customContent}}}
+
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+
+    {{{customJs}}}
+
+  </body>
+</html>

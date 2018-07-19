@@ -1,0 +1,35 @@
+h3 {
+	padding-top:1rem;
+}
+.list-group-flush .list-group-item:first-child {
+	border-top:none;
+}
+
+.list-group-flush .list-group-item {
+	display:flex;
+	align-items: center;
+    justify-content: space-between;
+}
+
+.list-group-flush .list-group-item .btn {
+	margin-right:3rem;
+}
+.list-group-flush .list-group-item .score {
+	line-height:1.5;
+}
+
+.card {
+	margin-top:4rem;
+}
+
+#confirm .modal-body {
+	text-align: center;
+}
+#confirm img {
+	width: 11rem;
+	margin:2rem;
+}
+#confirm .modal-footer {
+	display:flex;
+	justify-content: space-around;
+}
